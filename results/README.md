@@ -1,1 +1,1 @@
-###All results for Session IV of NGS Data Analysis Course
+###All results for the Intro-to-Unix workshop

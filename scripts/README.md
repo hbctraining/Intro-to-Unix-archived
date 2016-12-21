@@ -1,1 +1,1 @@
-###All scripts for Session IV of NGS Data Analysis Course
+###All scripts for the Intro-to-Unix workshop
