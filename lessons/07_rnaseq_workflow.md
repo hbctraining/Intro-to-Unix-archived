@@ -144,7 +144,7 @@ Now let's put it all together! The full STAR command is provided below.
 
 ```
 $ STAR --runThreadN 6 --genomeDir /groups/hbctraining/unix_workshop_other/reference_STAR \
---readFilesIn data/trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq \ 
+--readFilesIn data/trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq \
 --outFileNamePrefix results/STAR/Mov10_oe_1_ \
 --outSAMtype BAM SortedByCoordinate \
 --outSAMunmapped Within \
