@@ -149,7 +149,7 @@ manual using the `man` command. Try entering:
 
 ```$ man ls```
 
-This will open the manual page for `ls`. Use the space key to go forward and b to go backwards. When you are done reading, just hit `q` to quit.
+This will open the manual page for `ls`. Use the 'space' key to go forward and 'b' to go backwards. When you are done reading, just hit `q` to quit.
 
 Commands that are run from the shell can get extremely complicated. To see an example, open up the manual page for the `find` command. No one can possibly learn all of these arguments, of course. So you will probably find yourself referring to the manual page frequently.
 
@@ -370,7 +370,7 @@ Tab completion can also fill in the names of commands. For example, enter `e<tab
 
 You can easily access previous commands.  Hit the up arrow. Hit it again.  You can step backwards through your command history. The down arrow takes your forwards in the command history.
 
-Ctrl-r will do a reverse-search through your command history.  This
+'Ctrl-r' will do a reverse-search through your command history.  This
 is very useful.
 
 You can also review your recent commands with the `history` command.  Just enter:
@@ -397,11 +397,11 @@ then you could repeat command #260 by simply entering:
 
 **Other handy command-related shortcuts**
 
-* Ctrl-c will cancel the command you are writing, and give you a fresh prompt.
+* 'Ctrl-c' will cancel the command you are writing, and give you a fresh prompt.
 
-* Ctrl-a will bring you to the start of the command you are writing.
+* 'Ctrl-a' will bring you to the start of the command you are writing.
 
-* Ctrl-e will bring you to the end of the command you are writing.
+* 'Ctrl-e' will bring you to the end of the command you are writing.
 
 ****
 **Exercise**
