@@ -187,21 +187,21 @@ The `cut` command assumes our data columns are separated by tabs (i.e. tab-delim
 
 Our output looks good, so let's cut these columns from the whole dataset (not just the first 5 lines) and save it as a file, **`chr1-hg19genes_cut`**:
 
-`$ cut -f1,3,4,5,7 chr1_exons > chr1-hg19exons_cut`
+`$ cut -f1,3,4,5,7 chr1_exons > chr1_exons_cut`
 
 Check the cut file to make sure that it looks good using `less`. 
 
 #### Removing duplicate exons
 Now, we need to remove those exons that show up multiple times for different transcripts.    
 
-We can use a new tool, `sort`, to remove exons that show up more than once.  We can use the `sort` command with the `-u` option to return only unique lines and the `-k` option for sort to specify which column(s) to sort on. Note that this does something similar to cut's '-f'.
+We can use a new tool, `sort`, to remove exons that show up more than once. We can use the `sort` command with the `-u` option to return only unique lines.
 
-`$ sort -uk3,4 chr1-hg19exons_cut`
+`$ sort -u chr1_exons_cut | head -n 5`
 
 ####Counting the total number of exons
 Now, to count how many unique exons are on chromosome 1, we need to pipe the output to `wc -l`:
 
-`$ sort -uk3,4 chr1-hg19exons_cut | wc -l`
+`$ sort -u chr1_exons_cut | wc -l`
     
 
 ****
