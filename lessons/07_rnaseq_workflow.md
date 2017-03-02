@@ -1,7 +1,7 @@
 ---
 title: "RNA-Seq workflow"
 author: "Meeta Mistry, Bob Freeman"
-date: "Thursday, May 5, 2016"
+date: "Thursday, March 3, 2017"
 ---
 
 Approximate time: 90 minutes
@@ -128,7 +128,7 @@ The STAR aligner first looks for the longest sequence that exactly matches one o
 
 ![star](../img/star.png)
 
-Additionally, default filtering is applied in which the maximum number of multiple alignments allowed for a read is set to 10. If a read exceeds this number there is no alignment output. To change the default you can use `--outFilterMultimapNmax`, but for this lesson we will leave it as default. The advanced parameters that we are going to use are described below:
+Additionally, default filtering is applied in which the maximum number of multiple alignments allowed for a read is set to 20. If a read exceeds this number there is no alignment output. To change the default you can use `--outFilterMultimapNmax`, but for this lesson we will leave it as default. The advanced parameters that we are going to use are described below:
 
 
 * `--outSAMtype`: output filetype (SAM default)
@@ -156,7 +156,7 @@ $ STAR --runThreadN 6 --genomeDir /groups/hbctraining/unix_workshop_other/refere
 How many files do you see in your output directory? Using the `less` command take a look at `Mov10_oe_1_Log.final.out` and answer the following questions:  
 
 1. How many reads are uniquely mapped?
-2. How many reads map to more than 10 locations on the genome?
+2. How many reads map to more than 20 locations on the genome?
 3. How many reads are unmapped due to read length?
 
 
