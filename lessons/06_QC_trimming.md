@@ -1,10 +1,10 @@
 ---
 title: "RNA-Seq workflow - Part I: Quality Control"
 author: "Bob Freeman, Mary Piper"
-date: "Thursday, May 5, 2016"
+date: "Thursday, March 3, 2017"
 ---
 
-Approximate time: 60 minutes
+Approximate time: 85 minutes
 
 ## Learning Objectives:
 
@@ -143,17 +143,14 @@ If we check which modules we currently have loaded, we should not see FastQC.
 
 `$ module list`
 
-If we try to run FastQC on one of our fastq files, Orchestra won't be able to find the program.
 
-`$ fastqc Mov10_oe_1.subset.fq`
-
-This is because the FastQC program is not in our $PATH (i.e. its not in a directory that unix will automatically check to run commands/programs).
+If we check our $PATH, we will not see FastQC (however, bcbio is in our $PATH and contains the FastQC tool).
 
 ```bash
-$ $PATH
+$ echo $PATH
 ```
 
-To run the FastQC program, we first need to load the appropriate module, so it puts the program into our path:
+To run the FastQC program (pretending we don't have bcbio in our $PATH), we would first need to load the appropriate Orchestra module, so it puts the program (and any dependencies) into our path:
 
 `$ module load seq/fastqc/0.11.3`
 
@@ -162,7 +159,7 @@ Once a module for a tool is loaded, you have essentially made it directly availa
 `$ module list`
 
 ```bash
-$ $PATH
+$ echo $PATH
 ```
 
 FastQC will accept multiple file names as input, so we can use the *.fq wildcard.
@@ -255,57 +252,52 @@ The "Overrepresented sequences" table displays the sequences (at least 20 bp) th
 
 ![FastQC_contam](../img/FastQC_contam.png)
 
-##### .zip files   
+> **_NOTE:_** 
+>The other output of FastQC is a .zip file. These .zip files need to be unpacked with the `unzip` program. If we try to `unzip` them all at once:
+>
+>```
+>$ cd ~/ngs_course/rnaseq/results/fastqc_untrimmed_reads/    
+>$ unzip *.zip
+>```
+>
+>Did it work? 
 
-Let's go back to the terminal now. The other output of FastQC is a .zip file. These .zip files need to be unpacked with the `unzip` program. If we try to `unzip` them all at once:
-
-```bash
-$ cd ~/unix_workshop/rnaseq_project/results/fastqc_untrimmed_reads/
-    
-$ unzip *.zip
-```
-
-Did it work? 
-
-No, because `unzip` expects to get only one zip file. Welcome to the real world.
-We *could* do each file, one by one, but what if we have 500 files? There is a smarter way.
-We can save time by using a simple shell `for loop` to iterate through the list of files in *.zip.
-
-After you type the first line, you will get a special '>' prompt to type next lines.  
-You start with 'do', then enter your commands, then end with 'done' to execute the loop.
-
-This loop is basically a simple program. When it runs
-
-```bash
-$ for zip in *.zip
-do
-unzip $zip
-done
-```
-it will run unzip once for each file (whose name is stored in the $zip variable). The contents of each file will be unpacked into a separate directory by the unzip program.
-
-The 'for loop' is interpreted as a multipart command.  If you press the up arrow on your keyboard to recall the command, it will be shown like so:
-
-    for zip in *.zip; do echo File $zip; unzip $zip; done
-
-When you check your history later, it will help you remember what you did!
-
-##### Document your work
-
-What information is contained in the unzipped folder?
-
-```bash
-$ ls -lh *fastqc
-
-$ head *fastqc/summary.txt
-```
-
-To save a record, let's `cat` all `fastqc summary.txt` files into one `fastqc_summaries.txt` and move this to `~/unix_workshop/rnaseq_project/docs`. 
-You can use wildcards in paths as well as file names.  Do you remember how we said `cat` is really meant for concatenating text files?
-    
-```bash
-$ cat */summary.txt > ~/unix_workshop/rnaseq_project/logs/fastqc_summaries.txt
-```
+>No, because `unzip` expects to get only one zip file. Welcome to the real world.
+>We *could* do each file, one by one, but what if we have 500 files? There is a smarter way.
+>We can save time by using a simple shell `for loop` to iterate through the list of files in *.zip.
+>
+>After you type the first line, you will get a special '>' prompt to type next lines.  
+>You start with 'do', then enter your commands, then end with 'done' to execute the loop.
+>
+>Note that in the first line, we create a variable named `zip`.  After that, we call that variable with the syntax `$zip`. `$zip` is assigned the value of each item (file) in the list *.zip, once for each iteration of the loop.
+>
+>This loop is basically a simple program. When it runs
+>
+>```
+>$ for zip in *.zip
+>> do
+>> unzip $zip
+>> done
+>```
+>it will run unzip once for each file (whose name is stored in the $zip variable). The contents of each file will be unpacked into a separate directory by the unzip program.
+>
+>The 'for loop' is interpreted as a multipart command.  If you press the up arrow on your keyboard to recall the command, it will be shown like so:
+>
+>    for zip in *.zip; do unzip $zip; done
+>
+>When you check your history later, it will help you remember what you did!
+>
+>What information is contained in the unzipped folder?
+>
+>```
+>$ ls -lh Mov10_oe_1.subset_fastqc
+>$ head Mov10_oe_1.subset_fastqc/summary.txt
+>```
+>
+>To save a record, let's `cat` all `fastqc summary.txt` files into one `full_report.txt` and move this to `~/ngs_course/rnaseq/docs`. 
+>You can use wildcards in paths as well as file names.  Do you remember how we said `cat` is really meant for concatenating text files?
+>    
+>`$ cat */summary.txt > ~/ngs_course/rnaseq/logs/fastqc_summaries.txt`
 
 
 ##Quality Control - Trimming
