@@ -370,7 +370,7 @@ Tab completion can also fill in the names of commands. For example, enter `e<tab
 
 You can easily access previous commands.  Hit the up arrow. Hit it again.  You can step backwards through your command history. The down arrow takes your forwards in the command history.
 
-\^-r will do a reverse-search through your command history.  This
+Ctrl-r will do a reverse-search through your command history.  This
 is very useful.
 
 You can also review your recent commands with the `history` command.  Just enter:
