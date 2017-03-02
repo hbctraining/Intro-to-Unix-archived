@@ -1,10 +1,10 @@
 ---
 title: "Permissions and Environment variables"
 author: "Christina Koch, Radhika Khetani"
-date: "Thursday, May 5, 2016"
+date: "Thursday, March 3, 2017"
 ---
 
-Approximate time: 30 minutes
+Approximate time: 40 minutes
 
 ## Learning Objectives
  
