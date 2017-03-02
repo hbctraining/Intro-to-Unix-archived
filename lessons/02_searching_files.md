@@ -146,11 +146,7 @@ Let's explore our `chr1-hg19_genes.gtf` file a bit. What information does it con
 	chr1    unknown exon    16607   16765   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 	chr1    unknown exon    16858   17055   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 
-The columns in the gtf file contain the genomic coordinates of gene features (exon, start_codon, stop_codon, CDS) and the gene_names, transcript_ids and protein_ids (p_id) associated with these features. Note that sometimes an exon can be associated with multiple different genes and/or transcripts. For example, 
-
-`$ grep FAM138 chr1-hg19_genes.gtf | head -n 5`
-
-This search returns two different genes, FAM138A and FAM138F, that contain the same exon.
+The columns in the gtf file contain the genomic coordinates of gene features (exon, start_codon, stop_codon, CDS) and the gene_names, transcript_ids and protein_ids (p_id) associated with these features. Note that sometimes an exon can be associated with multiple different transcripts or gene isoforms. For example, 
 
 `$ grep PLEKHN1 chr1-hg19_genes.gtf | head -n 5`
 
@@ -160,17 +156,22 @@ Now that we know what type of information is inside of our gtf file, let's explo
 
 To determine the number of total exons on chromosome 1, we are going to perform a series of steps:
 	
-	1. Subset the dataset to only include the feature type and genomic location information
-	2. Extract only the genomic coordinates of exon features
+	1. Extract only the genomic coordinates of exon features
+	2. Subset the dataset to only include the feature type and genomic location information
 	3. Remove duplicate exons
 	4. Count the total number of exons
 	
+####Extracting genomic coordinates of exon features
+We only want the exons (not CDS or start_codon features), so let's use `grep` to only keep the exon lines and save to file, **`chr1_exons`**:
+
+`$ grep exon chr1-hg19_genes.gtf > chr1_exons`
+
 ####Subsetting dataset
 We will define an exon by it's genomic coordinates. Therefore, we only need the feature type and the genomic location (chr, start, stop, and strand) information to find the total number of exons. The columns corresponding to this information are 1, 3, 4, 5, and 7. 
 
-'cut' is a program that will extract columns from files.  It is a very good command to know.  Let's first try out the 'cut' command on a small dataset (just the first 5 lines of chr1-hg19_genes.gtf) to make sure we have the command correct:
+'cut' is a program that will extract columns from files.  It is a very good command to know.  Let's first try out the 'cut' command on a small dataset (just the first 5 lines of chr1_exons) to make sure we have the command correct:
 
-`$ head -n 5 chr1-hg19_genes.gtf | cut -f1,3,4,5,7`
+`$ cut -f1,3,4,5,7 chr1_exons | head -n 5`
    
 '-f1,3,4,5,7' means to cut these fields (columns) from the dataset.  
 
@@ -184,26 +185,21 @@ The `cut` command assumes our data columns are separated by tabs (i.e. tab-delim
 
 Our output looks good, so let's cut these columns from the whole dataset (not just the first 5 lines) and save it as a file, **`chr1-hg19genes_cut`**:
 
-`$ cut -f1,3,4,5,7 chr1-hg19_genes.gtf > chr1-hg19genes_cut`
+`$ cut -f1,3,4,5,7 chr1_exons > chr1-hg19exons_cut`
 
 Check the cut file to make sure that it looks good using `less`. 
 
-####Extracting genomic coordinates of exon features
-We only want the exons (not CDS or start_codon features), so let's use `grep` to only keep the exon lines and save to file, **`chr1_exons`**:
-
-`$ grep exon chr1-hg19genes_cut > chr1_exons`
-
 #### Removing duplicate exons
-Now, we need to remove those exons that show up multiple times for different genes or transcripts.    
+Now, we need to remove those exons that show up multiple times for different transcripts.    
 
 We can use a new tool, `sort`, to remove exons that show up more than once.  We can use the `sort` command with the `-u` option to return only unique lines and the `-k` option for sort to specify which column(s) to sort on. Note that this does something similar to cut's '-f'.
 
-`$ sort -uk3,4 chr1_exons`
+`$ sort -uk3,4 chr1-hg19exons_cut`
 
 ####Counting the total number of exons
 Now, to count how many unique exons are on chromosome 1, we need to pipe the output to `wc -l`:
 
-`$ sort -uk3,4 chr1_exons | wc -l`
+`$ sort -uk3,4 chr1-hg19exons_cut | wc -l`
     
 
 ****
