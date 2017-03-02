@@ -272,7 +272,7 @@ Over time, it will become easier for you to keep a mental note of the structure 
 
 ***
 **Exercise**
-* Change directories to `~/unix_workshop/raw_fastq/`, and list the contents of `unix_workshop/other` without changing directories again.
+* Change directories to `/home/username/unix_workshop/raw_fastq/`, and list the contents of `unix_workshop/other` without changing directories again.
 
 * List the contents of the `/bin` directory. Do you see anything familiar in there? How can you tell these are programs rather than plain files?
 ***
