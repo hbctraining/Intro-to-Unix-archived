@@ -160,12 +160,12 @@ To determine the number of total exons on chromosome 1, we are going to perform 
 	3. Remove duplicate exons
 	4. Count the total number of exons
 	
-####Extracting genomic coordinates of exon features
+####Extracting exon features
 We only want the exons (not CDS or start_codon features), so let's use `grep` to only keep the exon lines and save to file, **`chr1_exons`**:
 
 `$ grep exon chr1-hg19_genes.gtf > chr1_exons`
 
-####Subsetting dataset
+####Subsetting dataset to only genomic coordinates
 We will define an exon by it's genomic coordinates. Therefore, we only need the feature type and the genomic location (chr, start, stop, and strand) information to find the total number of exons. The columns corresponding to this information are 1, 3, 4, 5, and 7. 
 
 'cut' is a program that will extract columns from files.  It is a very good command to know.  Let's first try out the 'cut' command on a small dataset (just the first 5 lines of chr1_exons) to make sure we have the command correct:
