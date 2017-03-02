@@ -148,7 +148,7 @@ Let's explore our `chr1-hg19_genes.gtf` file a bit. What information does it con
 
 The columns in the gtf file contain the genomic coordinates of gene features (exon, start_codon, stop_codon, CDS) and the gene_names, transcript_ids and protein_ids (p_id) associated with these features. Note that sometimes an exon can be associated with multiple different genes and/or transcripts. For example, 
 
-`$ grep FAM138* chr1-hg19_genes.gtf | head -n 5`
+`$ grep FAM138 chr1-hg19_genes.gtf | head -n 5`
 
 This search returns two different genes, FAM138A and FAM138F, that contain the same exon.
 
