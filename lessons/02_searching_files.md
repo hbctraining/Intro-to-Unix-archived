@@ -166,23 +166,23 @@ We only want the exons (not CDS or start_codon features), so let's use `grep` to
 `$ grep exon chr1-hg19_genes.gtf > chr1_exons`
 
 ####Subsetting dataset to only keep genomic coordinates
-We will define an exon by it's genomic coordinates. Therefore, we only need the feature type and the genomic location (chr, start, stop, and strand) information to find the total number of exons. The columns corresponding to this information are 1, 3, 4, 5, and 7. 
+We will define an exon by it's genomic coordinates. Therefore, we only need the genomic location (chr, start, stop, and strand) information to find the total number of exons. The columns corresponding to this information are 1, 4, 5, and 7. 
 
 'cut' is a program that will extract columns from files.  It is a very good command to know.  Let's first try out the 'cut' command on a small dataset (just the first 5 lines of chr1_exons) to make sure we have the command correct:
 
-`$ cut -f1,3,4,5,7 chr1_exons | head -n 5`
+`$ cut -f1,4,5,7 chr1_exons | head -n 5`
    
-'-f1,3,4,5,7' means to cut these fields (columns) from the dataset.  
+'-f1,4,5,7' means to cut these fields (columns) from the dataset.  
 
-	chr1	exon	14362	14829	-
-	chr1	exon	14970	15038	-
-	chr1	exon	15796	15947	-
-	chr1	exon	16607	16765	-
-	chr1	exon	16858	17055	-
+	chr1	14362	14829	-
+	chr1	14970	15038	-
+	chr1	15796	15947	-
+	chr1	16607	16765	-
+	chr1	16858	17055	-
 
 The `cut` command assumes our data columns are separated by tabs (i.e. tab-delimited). The `chr1-hg19_genes.gtf` is a tab-delimited file, so the default `cut` command works for us. However, data can be separated by other types of delimiters. Another common delimiter is the comma, which separates data in comma-separated value (csv) files. If your data is not tab delimited, there is a `cut` command argument (-d) to specify the delimiter.
 
-Our output looks good, so let's cut these columns from the whole dataset (not just the first 5 lines) and save it as a file, **`chr1-hg19genes_cut`**:
+Our output looks good, so let's cut these columns from the whole dataset (not just the first 5 lines) and save it as a file, **`chr1_exons_cut`**:
 
 `$ cut -f1,3,4,5,7 chr1_exons > chr1_exons_cut`
 
