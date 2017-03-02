@@ -22,21 +22,21 @@ search within files without even opening them, using `grep`. Grep is a command-l
 utility for searching plain-text data sets for lines matching a string or regular expression.
 Let's give it a try!
 
-We are going to practice searching by using our fastq files, which contain the sequencing reads (nucleotide sequences) output from the sequencing facility. Each sequencing read in a FASTQ file is associated with four lines of output, and the first line (header line) always starts with an `@` symbol. A whole fastq record for a single sequencing read should appear similar to the following:
+We are going to practice searching with `grep` using our fastq files, which contain the sequencing reads (nucleotide sequences) output from a sequencing facility. Each sequencing read in a FASTQ file is associated with four lines of output, with the first line (header line) always starting with an `@` symbol. A whole fastq record for a single sequencing read should appear similar to the following:
 
 	@HWI-ST330:304:H045HADXX:1:1101:1111:61397
 	CACTTGTAAGGGCAGGCCCCCTTCACCCTCCCGCTCCTGGGGGANNNNNNNNNNANNNCGAGGCCCTGGGGTAGAGGGNNNNNNNNNNNNNNGATCTTGG
 	+
 	@?@DDDDDDHHH?GH:?FCBGGB@C?DBEGIIIIAEF;FCGGI#########################################################
 	
-Suppose we want to see how many sequencing reads (nucleotide sequences) in our file are really bad, with 10 consecutive Ns  
-Let's search for the string NNNNNNNNNN in file. 
+Suppose we want to see how many reads in our file are really bad, with 10 consecutive Ns. We can search for the string NNNNNNNNNN in file using the `grep` command. 
 
 `$ cd ~/unix_workshop/raw_fastq`
 
 `$ grep NNNNNNNNNN Mov10_oe_1.subset.fq`
 
 We get back a lot of lines.  What if we want to see the whole fastq record for each of these reads? 
+
 To return the whole fastq record for each of the reads  can use the '-B' and '-A' arguments for grep to return the matched line plus one before (-B 1) and two
 lines after (-A 2). Since each record is four lines and the second line is the sequence, this should
 give the whole record.
