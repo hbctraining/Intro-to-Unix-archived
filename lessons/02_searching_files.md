@@ -1,11 +1,8 @@
 ---
 title: "The Shell: Searching and Redirection"
 author: "Sheldon  McKay, Bob Freeman, Mary Piper"
-date: "Thursday, May 5, 2016"
+date: "Thursday, March 3, 2017"
 ---
-
-Adapted from the lesson by Tracy Teal.
-Contributors: Paul Wilson, Milad Fatenejad, Sasha Wood, and Radhika Khetani for Software Carpentry (http://software-carpentry.org/)
 
 Approximate time: 60 minutes
 
@@ -215,14 +212,20 @@ How could have you have determined the number of total exons by combining all of
 
 ```bash
 grep
-> (output redirection, write to file)
->> (output redirection, append to file)
-| (output redirection, take output from previous command as input to the next command)
+> (output redirection)
+>> (output redirection, append)
+| (output redirection, pipe)
 wc
 cut
 sort
+uniq
 ```
 
 ---
-*To share or reuse these materials, please find the attribution and license details at [license.md](https://github.com/hbc/Intro-to-Unix/blob/master/license.md).*
+*This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+
+* *The materials used in this lesson were derived from work that is Copyright © Data Carpentry (http://datacarpentry.org/). 
+All Data Carpentry instructional material is made available under the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0).*
+
+* *Adapted from the lesson by Tracy Teal. Contributors: Paul Wilson, Milad Fatenejad, Sasha Wood, and Radhika Khetani for Software Carpentry (http://software-carpentry.org/)*
 
