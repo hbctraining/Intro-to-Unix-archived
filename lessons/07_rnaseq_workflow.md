@@ -64,7 +64,7 @@ We'll first perform the commands for a single sample. Next, we'll create a scrip
 So let's get started by loading up some of the modules for tools we need for this section: 
 
 ```
- $ module load seq/samtools/1.2 seq/htseq/0.6.1p1 seq/STAR/2.5.2b
+ $ module load seq/samtools/1.3 seq/htseq/0.6.1p1 seq/STAR/2.5.2b
 ```
 
 Create an output directory for our alignment files:
