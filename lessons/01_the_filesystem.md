@@ -397,9 +397,11 @@ then you could repeat command #260 by simply entering:
 
 **Other handy command-related shortcuts**
 
-* \^-c will cancel the command you are writing, and give you a fresh prompt.
+* Ctrl-c will cancel the command you are writing, and give you a fresh prompt.
 
-* \^-a will bring you to the start of the command you are writing.
+* Ctrl-a will bring you to the start of the command you are writing.
+
+* Ctrl-e will bring you to the end of the command you are writing.
 
 ****
 **Exercise**
