@@ -22,7 +22,7 @@ search within files without even opening them, using `grep`. Grep is a command-l
 utility for searching plain-text data sets for lines matching a string or regular expression.
 Let's give it a try!
 
-We are going to practice searching with `grep` using our fastq files, which contain the sequencing reads (nucleotide sequences) output from a sequencing facility. Each sequencing read in a FASTQ file is associated with four lines of output, with the first line (header line) always starting with an `@` symbol. A whole fastq record for a single sequencing read should appear similar to the following:
+We are going to practice searching with `grep` using our fastq files, which contain the sequencing reads (nucleotide sequences) output from a sequencing facility. Each sequencing read in a FASTQ file is associated with four lines of output, with the first line (header line) always starting with an `@` symbol. A whole fastq record for a single read should appear similar to the following:
 
 	@HWI-ST330:304:H045HADXX:1:1101:1111:61397
 	CACTTGTAAGGGCAGGCCCCCTTCACCCTCCCGCTCCTGGGGGANNNNNNNNNNANNNCGAGGCCCTGGGGTAGAGGGNNNNNNNNNNNNNNGATCTTGG
