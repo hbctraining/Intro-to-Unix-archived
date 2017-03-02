@@ -6,10 +6,6 @@ date: "Thursday, May 5, 2016"
 
 Approximate time: 90 minutes
 
-Adapted from the lesson by Tracy Teal.
-Original contributors:
-Paul Wilson, Milad Fatenejad, Sasha Wood and Radhika Khetani for Software Carpentry (http://software-carpentry.org/)
-
 ## Learning Objectives
 - How do you access the shell?
 - How do you use it?
