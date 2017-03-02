@@ -1,10 +1,10 @@
 ---
 title: "The Shell"
 author: "Sheldon  McKay, Mary Piper, Radhika Khetani"
-date: "Thursday, May 5, 2016"
+date: "Thursday, March 3, 2017"
 ---
 
-Approximate time: 90 minutes
+Approximate time: 120 minutes
 
 ## Learning Objectives
 - How do you access the shell?
