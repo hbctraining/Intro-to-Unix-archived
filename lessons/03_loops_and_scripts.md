@@ -24,7 +24,7 @@ Shell scripts are **text files that contain commands we want to run**. As with a
 
 We are finally ready to see what makes the shell such a powerful programming environment. We are going to take the commands we repeat frequently and save them into a file so that we can **re-run all those operations** again later by typing **one single command**. Let's write a shell script that will do two things:
 
-1. Tell us what is our current working directory
+1. Tell us our current working directory
 2. Lists the contents of the directory 
 
 First open a new file using `nano`:
@@ -50,9 +50,9 @@ This is a very simple shell script. In this session and in upcoming sessions, we
 
 ## Bash variables
 
-A **variable** is a common concept shared by many programming languages. Variables are essentially a symbolic/temporary name for, or a reference to, some information. Variables are analogous to "buckets", where information can be stored, maintained and modified without too much hassle. 
+A **variable** is a common concept shared by many programming languages. Variables are essentially a symbolic/temporary name for, or a reference to, some information. Variables are analogous to "buckets", where information can be stored, maintained and modified. 
 
-Extending the bucket analogy: the bucket has a name associated with it, i.e. the name of the variable, and when referring to the information in the bucket, we use the name of the bucket, and do not directly refer to the actual data stored in it.
+Extending the bucket analogy: the bucket has a name associated with it, i.e. the name of the variable, and when referring to the information in the bucket, we use the name of the bucket, and do not directly refer to the actual data stored in it (which is by design, since the stored data is variable).
 
 In the example below, we define a variable or a 'bucket' called `file`. We will put the filename `Mov10_oe_1.subset.fq` as the value inside the bucket.
 
@@ -70,6 +70,12 @@ Let's try another command using the variable that we have created. In the last l
 
 	$ cd ~/unix_workshop/raw_fastq
 	$ wc -l $file
+____
+
+Exercise: 
+
+Reuse the `$file` variable to store a different file name, and rerun the commands we ran above (`wc -l`, `echo`)
+____
 
 Ok, so we know variables are like buckets, and so far we have seen that bucket filled with a single value. **Variables can store more than just a single value.** They can store multiple values and in this way can be useful to carry out many things at once. Let's create a new variable called `filenames` and this time we will store *all of the filenames* in the `raw_fastq` directory as values. 
 
