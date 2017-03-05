@@ -82,13 +82,13 @@ $ cd ~/unix_workshop/raw_fastq
 $ wc -l $file
 ```
 
-____
+***
 
-Exercise: 
+**Exercise**
 
 * Reuse the `$file` variable to store a different file name, and rerun the commands we ran above (`wc -l`, `echo`)
 
-____
+***
 
 Ok, so we know variables are like buckets, and so far we have seen that bucket filled with a single value. **Variables can store more than just a single value.** They can store multiple values and in this way can be useful to carry out many things at once. Let's create a new variable called `filenames` and this time we will store *all of the filenames* in the `raw_fastq` directory as values. 
 
@@ -120,13 +120,13 @@ $ wc -l $filenames
 
 What just happened? Because our variable contains multiple values, the shell runs the command on each value stored in `filenames` and prints the results to screen. 
 
-____
+***
 
-Exercise: 
+**Exercise**
 
 * Use some of the other commands we learned in previous lessons (i.e `head`, `tail`) on the `filenames` variable. 
 
-____
+***
 
 ## Loops
 
@@ -215,12 +215,15 @@ Rather than doing all of this in the terminal we are going to create a script fi
 
 ```bash
 $ cd unix_workshop
+
 $ nano generate_bad_reads_summary.sh
 ```
 
 We always want to start our scripts with a shebang line: 
 
-`#!/bin/bash`
+```bash
+#!/bin/bash
+```
 
 This line is the absolute path to the Bash interpreter. The shebang line ensures that the bash shell interprets the script even if it is executed using a different shell.
 
@@ -262,7 +265,7 @@ We'll also count the number of these reads and put that in a new file, using the
 done
 ```
 
-If you've noticed, we slipped a new `grep` flag `-H` in there. This flag will report the filename along with the match string. This is useful for when we generate the summary file.
+If you've noticed, we used a new `grep` flag `-H` above; this flag will report the filename along with the match string. This is useful for when we generate the summary file.
 
 And now, as a best practice of capturing all of our work into a running summary log:
 
@@ -307,7 +310,7 @@ To run this script, we simply enter the following command:
 $ sh generate_bad_reads_summary.sh
 ```
 
-To keep your data organized, let's move all of the bad read files out of our `raw_fastq` directory into a new directory called `other`.
+To keep our data organized, let's move all of the bad read files out of our `raw_fastq` directory into a new directory called `other`.
 
 ```bash
 $ mkdir other
