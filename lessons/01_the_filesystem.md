@@ -39,7 +39,9 @@ Since we are going to be working with this data on our remote server, **Orchestr
 
 Using the Terminal, you can use the command 'ssh' and your eCommons username to login. Type:
 
-```ssh username@orchestra.med.harvard.edu```
+```bash
+ssh username@orchestra.med.harvard.edu
+```
 
 You will receive a prompt for your password, and you should type in your ECommons password. 
 
@@ -66,13 +68,17 @@ Once you press enter, it will prompt you for a password. Type in your password, 
 
 Once logged in, you should see the Orchestra news and the command prompt: 
 
-```$ ```
+```bash
+$
+```
 
 The command prompt will have some characters before it, something like "-bash-4.1", this is telling you what the name of the computer you are working on is.
 
 The first command we will type on the command prompt will be to start a so-called "interactive session" on Orchestra.
 
-```$ bsub -Is -q interactive bash```
+```bash
+$ bsub -Is -q interactive bash
+```
 
 Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `rsk27@clarinet002-062`. *We will be explaining what this means in more detail later this afternoon when we talk about HPC and Orchestra.* 
 
@@ -80,7 +86,9 @@ Make sure that your command prompt is now preceded by a character string that co
 
 Copy our example data folder to your home directory using the following command:
 
-```$ cp -r /groups/hbctraining/unix_workshop/ .```
+```bash
+$ cp -r /groups/hbctraining/unix_workshop/ .
+```
 
 >'cp' is the command for copy. This command required you to specify the location of the item you want to copy (/groups/hbctraining/unix_workshop/) and the location of the destination (.); please note the space between the 2 in the command. The "-r" is an option that modifies the copy command to do something slightly different than usual. The "." means "here", i.e. the destination location is where you currently are.
 
@@ -88,13 +96,17 @@ Copy our example data folder to your home directory using the following command:
 
 We have each created our own copy of the example data folder into our home directory, **unix_workshop**. Let's go into the data folder and explore the data using the shell.
 
-```$ cd unix_workshop```
+```bash
+$ cd unix_workshop
+```
 
 > 'cd' stands for 'change directory'
 
 Let's see what is in here. Type:
 
-```$ ls```
+```bash
+$ ls
+```
 
 You will see:
 
@@ -104,9 +116,11 @@ You will see:
 
 There are five items listed.  What are they? We can use a "modifier" with `ls` to get more information; this modifier is called an argument (more below).
 
-```$ ls -F```
+```bash
+$ ls -F
 
-	genomics_data/  other/  raw_fastq/  README.txt  reference_data/
+genomics_data/  other/  raw_fastq/  README.txt  reference_data/
+```
 
 Anything with a "/" after it is a directory. Things with a "*" after them are programs.  If there are no decorations after the name, it's a file.
 
@@ -114,24 +128,30 @@ Anything with a "/" after it is a directory. Things with a "*" after them are pr
 
 You can also use the command:
 
-```$ ls -l```
-to see whether items in a directory are files or directories. `ls -l` gives a lot more information too.
+```bash
+$ ls -l
+```
 
+to see whether items in a directory are files or directories. `ls -l` gives a lot more information too.
+```bash
 	total 124
 	drwxrwsr-x 2 mp298 mp298  78 Sep 30 10:47 genomics_data
 	drwxrwsr-x 6 mp298 mp298 107 Sep 30 10:47 other
 	drwxrwsr-x 2 mp298 mp298 228 Sep 30 10:47 raw_fastq
 	-rw-rw-r-- 1 mp298 mp298 377 Sep 30 10:47 README.txt
 	drwxrwsr-x 2 mp298 mp298 238 Sep 30 10:47 reference_data
+```
 
 Let's go into the raw_fastq directory and see what is in there.
 
-```$ cd raw_fastq/```
+```bash
+$ cd raw_fastq/
 
-```$ ls -F```
+$ ls -F
 
-	Irrel_kd_1.subset.fq  Irrel_kd_3.subset.fq  Mov10_oe_2.subset.fq
-	Irrel_kd_2.subset.fq  Mov10_oe_1.subset.fq  Mov10_oe_3.subset.fq
+Irrel_kd_1.subset.fq  Irrel_kd_3.subset.fq  Mov10_oe_2.subset.fq
+Irrel_kd_2.subset.fq  Mov10_oe_1.subset.fq  Mov10_oe_3.subset.fq
+```
 
 All six items in this directory have no trailing slashes, so they are all files.
 
@@ -143,7 +163,9 @@ Most commands take additional arguments that control their exact behavior. For e
 Most commonly used shell commands have a manual available in the shell. You can access the
 manual using the `man` command. Try entering:
 
-```$ man ls```
+```bash
+$ man ls
+```
 
 This will open the manual page for `ls`. Use the 'space' key to go forward and 'b' to go backwards. When you are done reading, just hit `q` to quit.
 
@@ -179,7 +201,9 @@ Now let's go do that same navigation at the command line.
 
 Type:
 
-```$ cd```
+```bash
+$ cd
+```
 
 > This puts you in your home directory. No matter where you are in the directory system, `cd` will always bring you back to your home directory.
 
@@ -188,7 +212,9 @@ Now using `cd` and `ls`, go in to the `unix_workshop` directory and list its con
 
 Let's also check to see where we are. Sometimes when we're wandering around in the file system, it's easy to lose track of where we are. The command that tells you this is:
 
-```$ pwd```
+```bash
+$ pwd
+```
 
 > This stands for 'print working directory'. i.e. the directory you're currently working in.
 
@@ -198,7 +224,9 @@ To go 'back up a level' we can use `..`
 
 Type:
 
-```$ cd ..```
+```bash
+$ cd ..
+```
 
 Now do `ls` and `pwd`. 
 
@@ -211,17 +239,21 @@ By default, the `ls` commands lists the contents of the working directory (i.e. 
 
 Type:
 
-```$ cd```
+```bash
+$ cd
+```
 
 Then enter the command:
 
-```$ ls unix_workshop/```
+```bash
+$ ls unix_workshop/
+```
 
 This will list the contents of the `unix_workshop` directory without you having to navigate there.
 
 The `cd` command works in a similar way.
 
-```
+```bash
 $ cd unix_workshop/raw_fastq/
 $ pwd
 ```
@@ -249,12 +281,16 @@ which is the full path for your home directory. This tells you that you are in a
 
 Now enter the following command:
 
-```$ cd /home/username/unix_workshop/raw_fastq/```
+```bash
+$ cd /home/username/unix_workshop/raw_fastq/
+```
 
 This jumps to `raw_fastq`. Now go back to the home directory (`cd`). We saw
 earlier that the command:
 
-```$ cd unix_workshop/raw_fastq/```
+```bash
+$ cd unix_workshop/raw_fastq/
+```
 
 had the same effect - it took us to the `raw_fastq` directory. But, instead of specifying the full path (`/home/username/unix_workshop/raw_fastq`), we specified a *relative path*. In other words, we specified the path **relative to our current working directory**. 
 
@@ -282,23 +318,33 @@ home directory is very common. So, in the shell the tilde character,
 "~", is a shortcut for your home directory. Navigate to the `raw_fastq`
 directory:
 
-```$ cd```
+```bash
+$ cd
+```
 
-```$ cd unix_workshop/raw_fastq```
+```bash
+$ cd unix_workshop/raw_fastq
+```
 
 Then enter the command:
 
-```$ ls ~```
+```bash
+$ ls ~
+```
 
 This prints the contents of your home directory, without you having to type the full path because the tilde "~" is equivalent to "/home/username".
 
 Another shortcut is the "..":
 
-```$ ls ..```
+```bash
+$ ls ..
+```
 
 The shortcut `..` always refers to the directory above your current directory. So, it prints the contents of the `unix_workshop`. You can chain these together, so:
 
-```$ ls ../..```
+```bash
+$ ls ../..
+```
 
 prints the contents of `/home/username` which is your home directory. 
 
@@ -315,15 +361,21 @@ directory contains FASTQ files from our RNA-Seq experiment.
 
 The '*' character is a shortcut for "everything". Thus, if you enter `ls *`, you will see all of the contents of a given directory. Now try this command:
 
-```$ ls *fq```
+```bash
+$ ls *fq
+```
 
 This lists every file that ends with a `fq`. This command:
 
-```$ ls /usr/bin/*.sh```
+```bash
+$ ls /usr/bin/*.sh
+```
 
 Lists every file in `/usr/bin` that ends in the characters `.sh`.
 
-```$ ls Mov10*fq```
+```bash
+$ ls Mov10*fq
+```
 
 lists only the files that begin with 'Mov10' and end with 'fq'
 
