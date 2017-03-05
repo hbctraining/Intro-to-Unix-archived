@@ -28,9 +28,11 @@ We are going to practice searching with `grep` using our fastq files, which cont
 	
 Suppose we want to see how many reads in our file are really bad, with 10 consecutive Ns. We can search for the string NNNNNNNNNN in file using the `grep` command. 
 
-`$ cd ~/unix_workshop/raw_fastq`
+```bash
+$ cd ~/unix_workshop/raw_fastq
 
-`$ grep NNNNNNNNNN Mov10_oe_1.subset.fq`
+$ grep NNNNNNNNNN Mov10_oe_1.subset.fq
+```
 
 We get back a lot of lines.  What if we want to see the whole fastq record for each of these reads? 
 
@@ -38,7 +40,9 @@ To return the whole fastq record for each of the reads  can use the '-B' and '-A
 lines after (-A 2). Since each record is four lines and the second line is the sequence, this should
 give the whole record.
 
-`$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq`
+```bash
+$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq
+```
 
 for example:
 
@@ -79,7 +83,9 @@ The redirection command for putting something in a file is `>`
 Let's try it out and put all the sequences that contain 'NNNNNNNNNN'
 from all the files in to another file called `bad_reads.txt`.
 
-`$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq > bad_reads.txt`
+```bash
+$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq > bad_reads.txt
+```
 
 The prompt should sit there a little bit, and then it should look like nothing
 happened. But type `ls`. You should have a new file called `bad_reads.txt`. Take
@@ -87,11 +93,15 @@ a look at it and see if it has what you think it should.
 
 If we use '>>', it will append to rather than overwrite a file.  This can be useful for saving more than one search, for example:
     
-`$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_2.subset.fq >> bad_reads.txt`
+```bash
+$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_2.subset.fq >> bad_reads.txt
+```
 
 Since our `bad_reads.txt` file isn't a raw_fastq file, we should move it to a different location within our directory. We decide to move it to the `other` folder using the command `mv`. 
 
-`$ mv bad_reads.txt ../other/`
+```bash
+$ mv bad_reads.txt ../other/
+```
 
 There's one more useful redirection command that we're going to show, and that's
 called the pipe command, and it is `|`. It's probably not a key on
@@ -101,7 +111,9 @@ When it was all whizzing by before, we wished we could just slow it down and
 look at it, like we can with `less`. Well it turns out that we can! We pipe
 the `grep` command to `less`
 
-`$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq | less`
+```bash
+$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq | less
+```
 
 Now we can use the arrows to scroll up and down and use `q` to get out.
 
@@ -110,12 +122,16 @@ We can also do something tricky and use the command `wc`. `wc` stands for
 it to count the number of lines we're getting back from our `grep` command.
 And that will magically tell us how many sequences we're finding.
 
-`$ grep NNNNNNNNNN Mov10_oe_1.subset.fq | wc`
+```bash
+$ grep NNNNNNNNNN Mov10_oe_1.subset.fq | wc
+```
 
 This command tells us the number of lines, words and characters in the file. If we
 just want the number of lines, we can use the `-l` flag for `lines`.
 
-`$ grep NNNNNNNNNN Mov10_oe_1.subset.fq | wc -l`
+```bash
+$ grep NNNNNNNNNN Mov10_oe_1.subset.fq | wc -l
+```
 
 Redirecting is not super intuitive, but it's really powerful for stringing
 together these different commands, so you can do whatever you need to do.
@@ -131,23 +147,29 @@ learn to become proficient with the pipe and redirection operators:
 
 Finally, let's use the new tools in our kit and a few new ones to examine our gene annotation file, **chr1-hg19_genes.gtf**, which we will be using later to find the genomic coordinates of all known exons on chromosome 1.
 
-`$ cd ~/unix_workshop/reference_data/`
+```bash
+$ cd ~/unix_workshop/reference_data/
+```
 
 Let's explore our `chr1-hg19_genes.gtf` file a bit. What information does it contain?
 
-`$ less chr1-hg19_genes.gtf`
+```bash
+$ less chr1-hg19_genes.gtf
 
 	chr1    unknown exon    14362   14829   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 	chr1    unknown exon    14970   15038   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 	chr1    unknown exon    15796   15947   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 	chr1    unknown exon    16607   16765   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
 	chr1    unknown exon    16858   17055   .       -       .       gene_id "WASH7P"; gene_name "WASH7P"; transcript_id "NR_024540"; tss_id "TSS7245";
+```
 
 > The GTF file is a tab-delimited gene annotation file often used in NGS analyses. For more information on this file format, check out the [Ensembl site](http://useast.ensembl.org/info/website/upload/gff.html). 
 
 The columns in the **GTF file contain the genomic coordinates of gene features (exon, start_codon, stop_codon, CDS) and the gene_names, transcript_ids and protein_ids (p_id) associated with these features**. Note that sometimes an exon can be associated with multiple different transcripts or gene isoforms. For example, 
 
-`$ grep PLEKHN1 chr1-hg19_genes.gtf | head -n 5`
+```bash
+$ grep PLEKHN1 chr1-hg19_genes.gtf | head -n 5
+```
 
 This search returns two different transcripts of the same gene, NM_001160184 and NM_032129, that contain the same exon.
 
@@ -163,14 +185,18 @@ To determine the number of total exons on chromosome 1, we are going to perform 
 ####Extracting exon features
 We only want the exons (not CDS or start_codon features), so let's use `grep` to only keep the exon lines and save to file, **`chr1_exons`**:
 
-`$ grep exon chr1-hg19_genes.gtf > chr1_exons`
+```bash
+$ grep exon chr1-hg19_genes.gtf > chr1_exons
+```
 
 ####Subsetting dataset to only keep genomic coordinates
 We will define an exon by it's genomic coordinates. Therefore, we only need the genomic location (chr, start, stop, and strand) information to find the total number of exons. The columns corresponding to this information are 1, 4, 5, and 7. 
 
 'cut' is a program that will extract columns from files.  It is a very good command to know.  Let's first try out the 'cut' command on a small dataset (just the first 5 lines of chr1_exons) to make sure we have the command correct:
 
-`$ cut -f1,4,5,7 chr1_exons | head -n 5`
+```bash
+$ cut -f1,4,5,7 chr1_exons | head -n 5
+```
    
 '-f1,4,5,7' means to cut these fields (columns) from the dataset.  
 
@@ -184,7 +210,9 @@ The `cut` command assumes our data columns are separated by tabs (i.e. tab-delim
 
 Our output looks good, so let's cut these columns from the whole dataset (not just the first 5 lines) and save it as a file, **`chr1_exons_cut`**:
 
-`$ cut -f1,3,4,5,7 chr1_exons > chr1_exons_cut`
+```bash
+$ cut -f1,3,4,5,7 chr1_exons > chr1_exons_cut
+```
 
 Check the cut file to make sure that it looks good using `less`. 
 
@@ -193,13 +221,16 @@ Now, we need to remove those exons that show up multiple times for different tra
 
 We can use a new tool, `sort`, to remove exons that show up more than once. We can use the `sort` command with the `-u` option to return only unique lines.
 
-`$ sort -u chr1_exons_cut | head -n 5`
+```bash
+$ sort -u chr1_exons_cut | head -n 5
+```
 
 ####Counting the total number of exons
 Now, to count how many unique exons are on chromosome 1, we need to pipe the output to `wc -l`:
 
-`$ sort -u chr1_exons_cut | wc -l`
-    
+```bash
+$ sort -u chr1_exons_cut | wc -l
+```
 
 ****
 **Final Exercise**
