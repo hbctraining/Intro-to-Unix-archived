@@ -75,6 +75,7 @@ ____
 Exercise: 
 
 * Reuse the `$file` variable to store a different file name, and rerun the commands we ran above (`wc -l`, `echo`)
+
 ____
 
 Ok, so we know variables are like buckets, and so far we have seen that bucket filled with a single value. **Variables can store more than just a single value.** They can store multiple values and in this way can be useful to carry out many things at once. Let's create a new variable called `filenames` and this time we will store *all of the filenames* in the `raw_fastq` directory as values. 
@@ -104,6 +105,7 @@ ____
 Exercise: 
 
 * Use some of the other commands we learned in previous lessons (i.e `head`, `tail`) on the `filenames` variable. 
+
 ____
 
 ## Loops
