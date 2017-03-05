@@ -316,7 +316,7 @@ To run this script, we simply enter the following command:
 $ sh generate_bad_reads_summary.sh
 ```
 
-To keep our data organized, let's move all of the bad read files out of our `raw_fastq` directory into a new directory called `other`.
+To keep our data organized, let's move all of the bad read files out of the `raw_fastq` directory into a new directory called `other`.
 
 ```bash
 $ mkdir other
