@@ -401,11 +401,15 @@ BONUS: List all of the files in `/bin` that contain the letter 'a' or 'c'.
 
 Navigate to the home directory. Typing out directory names can waste a lot of time. When you start typing out the name of a directory, then hit the tab key, the shell will try to fill in the rest of the directory name. For example, type `cd` to get back to your home directly, then enter:
 
-```$ cd uni<tab>```
+```bash
+$ cd uni<tab>
+```
 
 The shell will fill in the rest of the directory name for `unix_workshop`. Now go to `unix_workshop/raw_fastq` and 
 
-```$ ls Mov10_oe_<tab><tab>```
+```bash
+$ ls Mov10_oe_<tab><tab>
+```
 
 When you hit the first tab, nothing happens. The reason is that there are multiple directories in the home directory which start with `Mov10_oe_`. Thus, the shell does not know which one to fill in. When you hit tab again, the shell will list the possible choices.
 
@@ -423,23 +427,12 @@ is very useful.
 
 You can also review your recent commands with the `history` command.  Just enter:
 
-```$ history```
+```bash
+$ history
+```
 
 to see a numbered list of recent commands, including this just issues
-`history` command.  You can reuse one of these commands directly by
-referring to the number of that command.
-
-If your history looked like this:
-
-    259  ls *
-    260  ls /usr/bin/*.sh
-    261  ls *fq
-
-then you could repeat command #260 by simply entering:
-
-```$ !260```
-
-(that's an exclamation mark).  You will be glad you learned this when you try to re-run very complicated commands.
+`history` command. 
 
 > Only a certain number of commands are stored and displayed with `history`, there is a way to modify this to store a different number.
 
@@ -451,14 +444,6 @@ then you could repeat command #260 by simply entering:
 
 * 'Ctrl-e' will bring you to the end of the command you are writing.
 
-****
-**Exercise**
-
-1. Find the line number in your history for the last exercise (listing
-files in `/bin`) and reissue that command.
-
-****
-
 ## Examining Files
 
 We now know how to move around the file system and look at the
@@ -467,7 +452,9 @@ contents of directories, but how do we look at the contents of files?
 The easiest way to examine a file is to just print out all of the
 contents using the command `cat`. Print the contents of `unix_workshop/other/sequences.fa` by entering the following command:
 
-`$ cat ~/unix_workshop/other/sequences.fa`
+```bash
+$ cat ~/unix_workshop/other/sequences.fa
+```
 
 This prints out the all the contents of `sequences.fa` to the screen.
 
@@ -479,7 +466,9 @@ What does this file contain?
 
 Move back to our `raw_fastq` directory and enter the following command:
 
-`less Mov10_oe_1.subset.fq`
+```bash
+less Mov10_oe_1.subset.fq
+```
 
 We will explore fastq files in more detail later, but notice that fastq files have four lines of data associated with every sequence read. Not only is there a header line and the nucleotide sequence, similar to a fasta file, but fastq files also contain quality information for each nucleotide in the sequence. 
 
@@ -510,15 +499,21 @@ to see the beginning or end of the file, or see how it's formatted.
 The commands are `head` and `tail` and they just let you look at
 the beginning and end of a file respectively.
 
-```$ head Mov10_oe_1.subset.fq ```
+```bash
+$ head Mov10_oe_1.subset.fq
+```
 
-```$ tail Mov10_oe_1.subset.fq```
+```bash
+$ tail Mov10_oe_1.subset.fq
+```
 
 The `-n` option to either of these commands can be used to print the first or last `n` lines of a file. To print the first/last line of the file use:
 
-```$ head -n 1 Mov10_oe_1.subset.fq```
+```bash
+$ head -n 1 Mov10_oe_1.subset.fq
 
-```$ tail -n 1 Mov10_oe_1.subset.fq```
+$ tail -n 1 Mov10_oe_1.subset.fq
+```
 
 ## Creating, moving, copying, and removing
 
@@ -529,9 +524,11 @@ so let's make a copy to work with.
 
 Lets copy the file using the copy `cp` command. Navigate to the `raw_fastq` directory and enter:
 
-```$ cp Mov10_oe_1.subset.fq Mov10_oe_1.subset-copy.fq```
+```bash
+$ cp Mov10_oe_1.subset.fq Mov10_oe_1.subset-copy.fq
 
-```$ ls -l```
+$ ls -l
+```
 
 Now ``Mov10_oe_1.subset-copy.fq`` has been created as a copy of `Mov10_oe_1.subset.fq`
 
@@ -540,43 +537,53 @@ Let's make a 'backup' directory where we can put this file.
 The `mkdir` command is used to make a directory. Just enter `mkdir`
 followed by a space, then the directory name.
 
-```$ mkdir backup```
+```bash
+$ mkdir backup
+```
 
 > File/directory/program names with spaces in them do not work in unix, use characters like hyphens or underscores instead.
 
 We can now move our backed up file in to this directory. We can move files around using the command `mv`. Enter this command:
 
-```$ mv *copy.fq backup```
+```bash
+$ mv *copy.fq backup
+```
 
-```$ ls -l backup```
+```bash
+$ ls -l backup
 
 	drwxrwsr-x 2 mp298 mp298       43 Sep 30 13:59 .
 	drwxrwsr-x 8 mp298 mp298      203 Sep 30 13:58 ..
 	-rw-rw-r-- 1 mp298 mp298 75706556 Sep 30 13:56 Mov10_oe_1.subset-copy.fq
+```
 
 The `mv` command is also how you rename files. Since this file is so
 important, let's rename it:
 
-```$ cd backup```
+```bash
+$ cd backup
 
-`$ mv Mov10_oe_1.subset-copy.fq Mov10_oe_1.subset-copy.fq_DO_NOT_TOUCH!`
+$ mv Mov10_oe_1.subset-copy.fq Mov10_oe_1.subset-backup.fq
 
-`$ ls`
+$ ls
 
-	Mov10_oe_1.subset-copy.fq_DO_NOT_TOUCH!
+Mov10_oe_1.subset-backup.fq
+```
 
 Finally, we decided this was silly and want to start over.
 
-```$ cd ..```
+```bash
+$ cd ..
 
-```$ rm backup/Mov*```
+$ rm backup/Mov*
+```
 
 > The `rm` file permanently removes the file. Be careful with this command. The shell doesn't
 just nicely put the files in the Trash. They're really gone.
 >
-> Same with moving and renaming files. It will **not** ask you if you are sure that you want to "replace existing file".
+> Same with moving and renaming files. It will **not** ask you if you are sure that you want to "replace existing file". You can use `rm -f` if you want it to ask before deleting the file(s).
 
-* * * *
+***
 **Exercise**
 
 Do the following:
@@ -585,11 +592,13 @@ Do the following:
 2.  Create a backup directory called `new_backup`
 3.  Copy your backup files there
 
-* * * *
+***
 
 By default, `rm`, will NOT delete directories. You can tell `rm` to delete a directory using the `-r` option. Let's delete both backup directories, `backup` and `new_backup`. Enter the following command:
 
-```$ rm -r new_backup/ backup/```
+```bash
+$ rm -r new_backup/ backup/
+```
 
 ## Writing files
 
@@ -598,7 +607,9 @@ We've been able to do a lot of work with files that already exist, but what if w
 To write in files, we're going to use the command `nano`. We're going to create
 a file that contains some text. We'll name this file 'awesome.txt'.
 
-```$ nano awesome.txt```
+```bash
+$ nano awesome.txt
+```
 
 Now you have something that looks like
 
@@ -614,15 +625,14 @@ Now you've written a file. You can take a look at it with less or cat, or open i
 ****
 **Exercise**
 
-Open 'awesome.txt' and on a new line add the following `echo "This is my first file written in nano"`, and save the file.
-****
+* Open 'awesome.txt' and on a new line add the following `echo "This is my first file written in nano"`, and save the file.
 
-****
 **Exercise-extra**
 
-Let's try to find a *hidden directory* in `unix_workshop`, and list its contents.  What is the name of the file within the hidden directory?
+* Let's try to find a *hidden directory* in `unix_workshop`, and list its contents.  What is the name of the file within the hidden directory?
 
-Hint: hidden files and folders in unix start with `.`, for example `.bashrc`
+> Hint: hidden files and folders in unix start with `.`, for example `.bashrc`
+
 ****
 
 
