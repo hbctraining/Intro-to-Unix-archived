@@ -190,14 +190,20 @@ The we will run the `basename` command on one of the FASTQ files. Be sure to spe
 $ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq
 ```
 
-What is returned to you? The filename was split into the path `unix_workshop/raw_fastq/` and the filename. The command returns only the filename. Now, suppose we wanted to also trim off the file extension (i.e. remove `.fq` leaving only the file *base name*). We can do this by adding a parameter to the command to specify what string of characters we want trimmed.
+What is returned to you? The filename was split into the path `unix_workshop/raw_fastq/` and the filename `Mov10_oe_1.subset.fq`. The command returns only the filename. Now, suppose we wanted to also trim off the file extension (i.e. remove `.fq` leaving only the file *base name*). We can do this by adding a parameter to the command to specify what string of characters we want trimmed.
 
 ```bash
 $ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq .fq
 ```
 
-You should now see that only `Mov10_oe_1.subset` is returned. *How would you modify the command to only return to you `Mov10_oe_1`?*
+You should now see that only `Mov10_oe_1.subset` is returned. 
 
+***
+**Exercise**
+
+* How would you modify the above `basename` command to only return `Mov10_oe_1`?
+
+***
 
 ## Automating with Scripts
 	
