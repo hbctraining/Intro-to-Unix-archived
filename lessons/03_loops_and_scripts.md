@@ -74,7 +74,7 @@ ____
 
 Exercise: 
 
-Reuse the `$file` variable to store a different file name, and rerun the commands we ran above (`wc -l`, `echo`)
+* Reuse the `$file` variable to store a different file name, and rerun the commands we ran above (`wc -l`, `echo`)
 ____
 
 Ok, so we know variables are like buckets, and so far we have seen that bucket filled with a single value. **Variables can store more than just a single value.** They can store multiple values and in this way can be useful to carry out many things at once. Let's create a new variable called `filenames` and this time we will store *all of the filenames* in the `raw_fastq` directory as values. 
@@ -83,9 +83,11 @@ To list all the filenames in the directory that have a `.fq` extension, we know 
 
 	$ ls *.fq
 	
-Now we want to *assign* the output of `ls` to the variable. We will give that variable the name `filenames`:
+Now we want to *assign* the output of `ls` to the variable:
 
 	$ filenames=`ls *.fq`
+
+> Note the syntax for assigning output of commands to variables, i.e. the ticks around the `ls` command.
 
 Check and see what's stored inside our newly created variable using `echo`:
 	
@@ -97,8 +99,12 @@ Let's try the `wc -l` command again, but this time using our new variable `filen
 	
 What just happened? Because our variable contains multiple values, the shell runs the command on each value stored in `filenames` and prints the results to screen. 
 
-> Try using some of the other commands we learned in previous lessons (i.e `head`, `tail`) on the `filename` variable. 
+____
 
+Exercise: 
+
+* Use some of the other commands we learned in previous lessons (i.e `head`, `tail`) on the `filenames` variable. 
+____
 
 ## Loops
 
