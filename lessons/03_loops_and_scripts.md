@@ -30,7 +30,7 @@ We are finally ready to see what makes the shell such a powerful programming env
 First open a new file using `nano`:
 
 ```bash
-$ nano listing.sh
+nano listing.sh
 ```
 
 Then type in the following lines in the `listing.sh` file:
