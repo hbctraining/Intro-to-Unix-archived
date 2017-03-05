@@ -29,19 +29,25 @@ We are finally ready to see what makes the shell such a powerful programming env
 
 First open a new file using `nano`:
 
-	$ nano listing.sh
-	
+```bash
+$ nano listing.sh
+```
+
 Then type in the following lines in the `listing.sh` file:
 
-	echo "Your current working directory is:"
-	pwd
-	echo "These are the contents of this directory:"
-	ls -l 
+```bash
+echo "Your current working directory is:"
+pwd
+echo "These are the contents of this directory:"
+ls -l 
+```
 
 Close nano and save the file. Now let's run the new script we have created. To run a shell script you usually use the `bash` or `sh` command.
 
-	$ sh listing.sh
-	
+```bash
+$ sh listing.sh
+```
+
 > Did it work like you expected?
 > 
 > Were the `echo` commands helpful in letting you know what came next?
@@ -56,11 +62,14 @@ Extending the bucket analogy: the bucket has a name associated with it, i.e. the
 
 In the example below, we define a variable or a 'bucket' called `file`. We will put the filename `Mov10_oe_1.subset.fq` as the value inside the bucket.
 
-	$ file=Mov10_oe_1.subset.fq
-
+```bash
+$ file=Mov10_oe_1.subset.fq
+```
 Once you press return, you should be back at the command prompt. *How do we know that we actually created the bash variable?* We can use the echo command to list what's inside `file`:
 
-	$ echo $file
+```bash
+$ echo $file
+```
 
 What do you see in the terminal? If the variable was not created, the command will return nothing. Did you notice that when we created the variable we just typed in the variable name, but when using it as an argument to the `echo` command, we explicitly use a `$` in front of it (`$file`)? Why? 
 
@@ -68,8 +77,11 @@ Well, in the former, we're setting the value, while in the latter, we're retriev
 
 Let's try another command using the variable that we have created. In the last lesson, we introduced the `wc -l` command which allows us to count the number of lines in a file. We can count the number of lines in `Mov10_oe_1.subset.fq` by referencing the `file` variable, but first move into the `raw_fastq` directory:
 
-	$ cd ~/unix_workshop/raw_fastq
-	$ wc -l $file
+```bash
+$ cd ~/unix_workshop/raw_fastq
+$ wc -l $file
+```
+
 ____
 
 Exercise: 
@@ -82,22 +94,30 @@ Ok, so we know variables are like buckets, and so far we have seen that bucket f
 
 To list all the filenames in the directory that have a `.fq` extension, we know the command is:
 
-	$ ls *.fq
-	
+```bash
+$ ls *.fq
+```
+
 Now we want to *assign* the output of `ls` to the variable:
 
-	$ filenames=`ls *.fq`
+```bash
+$ filenames=`ls *.fq`
+```
 
 > Note the syntax for assigning output of commands to variables, i.e. the ticks around the `ls` command.
 
 Check and see what's stored inside our newly created variable using `echo`:
 	
-	$ echo $filenames
+```bash
+$ echo $filenames
+```
 
 Let's try the `wc -l` command again, but this time using our new variable `filenames` as the argument:
 
-	$ wc -l $filenames
-	
+```bash
+$ wc -l $filenames
+```
+
 What just happened? Because our variable contains multiple values, the shell runs the command on each value stored in `filenames` and prints the results to screen. 
 
 ____
@@ -116,19 +136,19 @@ Looping is a concept shared by several programming languages, and its implementa
 
 The structure or the syntax of (*for*) loops in bash is as follows:
 
-```
+```bash
 for (variable_name) in (list)
- do
-   (commands $variable_name) 
- done
+do
+(commands $variable_name) 
+done
 ```
 
 where the ***variable_name*** defines (or initializes) a variable that takes the value of every member of the specified ***list*** one at a time. At each iteration, the loop retrieves the value stored in the variable (which is a member of the input list) and runs through the commands indicated between the `do` and `done` one at a time. *This syntax/structure is virtually set in stone.* 
 
 For example, we can run the same commands (`echo` and `wc -l`) used in the "Bash variables" section but this time run them sequentially on each file:
 
-```
-$ for var in *.fq
+```bash
+for var in *.fq
  do
    echo $var
    wc -l $var
@@ -146,7 +166,7 @@ Essentially, **the number of loops == the number of items in the list**, in our 
 Of course, `var` is a useless variable name. But since it doesn't matter what variable name we use, we can make it something more intuitive.
 
 ```bash
-$ for filename in *.fq
+for filename in *.fq
  do
    echo $filename
    wc -l $filename
@@ -160,16 +180,22 @@ Pretty simple and cool, huh?
 
 Before we get started on creating more complex scripts, we want to introduce you to a command that will be useful for future scripting. The `basename` command is used for extracting the base name of a file, which is accomplished using string splitting to strip the directory and any suffix from filenames. Let's try an example, by first moving back to your home directory:
 
-	$ cd
-	
+```bash
+$ cd
+```
+
 The we will run the `basename` command on one of the FASTQ files. Be sure to specify the path to the file:
 
-	$ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq
-	
+```bash
+$ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq
+```
+
 What is returned to you? The filename was split into the path `unix_workshop/raw_fastq/` and the filename. The command returns only the filename. Now, suppose we wanted to also trim off the file extension (i.e. remove `.fq` leaving only the file *base name*). We can do this by adding a parameter to the command to specify what string of characters we want trimmed.
 
-	$ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq .fq
-	
+```bash
+$ basename unix_workshop/raw_fastq/Mov10_oe_1.subset.fq .fq
+```
+
 You should now see that only `Mov10_oe_1.subset` is returned. *How would you modify the command to only return to you `Mov10_oe_1`?*
 
 
@@ -200,7 +226,7 @@ This line is the absolute path to the Bash interpreter. The shebang line ensures
 
 After the shebang line, we enter the commands we want to execute. First we want to move into our `raw_fastq` directory:
 
-``` bash
+```bash
 cd ~/unix_workshop/raw_fastq
 ```
 
@@ -277,15 +303,17 @@ cat *badreads.count.summary >> runlog.txt
 
 To run this script, we simply enter the following command:
 
-	$ sh generate_bad_reads_summary.sh
-
+```bash
+$ sh generate_bad_reads_summary.sh
+```
 
 To keep your data organized, let's move all of the bad read files out of our `raw_fastq` directory into a new directory called `other`.
 
-	$ mkdir other
+```bash
+$ mkdir other
 
-	$ mv raw_fastq/*bad* other/
-
+$ mv raw_fastq/*bad* other/
+```
 
 ---
 *This lesson has been developed by members of the teaching team at the [Harvard Chan Bioinformatics Core (HBC)](http://bioinformatics.sph.harvard.edu/). These are open access materials distributed under the terms of the [Creative Commons Attribution license](https://creativecommons.org/licenses/by/4.0/) (CC BY 4.0), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
