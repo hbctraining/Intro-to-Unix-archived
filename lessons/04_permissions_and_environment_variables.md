@@ -246,7 +246,7 @@ $ which <your favorite command>
 > #### Modifying Environment Variables
 >
 > If you are interested in adding a new entry to the path variable, the command to use is `export`. This command is usually executed as follows: 
-`export PATH=$PATH:~/opt/bin`, which tells the shell to add the ~/opt/bin directory to the end of the preexisiting list within $PATH. Alternatively, if you use `export PATH=~/opt/bin:$PATH`, the same directory will be added to the beginning of the list. The order determines where the shell will look first.
+`export PATH=$PATH:~/opt/bin`, which tells the shell to add the ~/opt/bin directory to the end of the preexisting list within $PATH. Alternatively, if you use `export PATH=~/opt/bin:$PATH`, the same directory will be added to the beginning of the list. The order determines where the shell will look first.
 
 #### Closer look at the inner workings of the shell, in the context of $PATH
  
