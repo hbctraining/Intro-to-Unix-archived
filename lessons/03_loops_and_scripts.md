@@ -124,7 +124,7 @@ What just happened? Because our variable contains multiple values, the shell run
 
 **Exercise**
 
-* Use some of the other commands we learned in previous lessons (i.e `head`, `tail`) on the `filenames` variable. 
+* Use some of the other commands we learned in previous lessons (i.e. `head`, `tail`) on the `filenames` variable. 
 
 ***
 
