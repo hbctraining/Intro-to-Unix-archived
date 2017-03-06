@@ -23,7 +23,7 @@ Before we start talking about how to organize an RNA-Seq project, we will talk a
 
 ### Planning for and organizing large datasets/analyses
 
-Sequencing projects can quickly accumulate hundreds of files across tens of folders and occupy gigabytes/petabytes of space with pertinent, as well as redundant information. Therefore, befire you start any type of data analysis, it is best to make sure you have the necessary storage space available, a data archiving plan in place, and most importantly, that you stay as organized as possible during the analysis. As you can imagine, performing an analysis with a large number of datasets that get processed using multi-step workflows requires a focus on data provenance. This is important for many reasons, including publishing, data sharing, reusing methods/worksflows etc. 
+Sequencing projects can quickly accumulate hundreds of files across tens of folders and occupy gigabytes/petabytes of space with pertinent, as well as redundant information. Therefore, before you start any type of data analysis, it is best to make sure you have the necessary storage space available, a data archiving plan in place, and most importantly, that you stay as organized as possible during the analysis. As you can imagine, performing an analysis with a large number of datasets that get processed using multi-step workflows requires a focus on data provenance. This is important for many reasons, including publishing, data sharing, reusing methods/workflows etc. 
 
 We won't be talking much about planning for storage and archiving, but will focus on how to organize an RNA-Seq experiment and thereby making data provenance easier.
 
@@ -36,7 +36,7 @@ $ pwd
 ```
 this should give the result: `/home/user_name`
 
-Now, make a directory for the RNA-seq analysis within the `ngs_course` folder using the `mkdir` command
+Now, make a directory for the RNA-Seq analysis within the `ngs_course` folder using the `mkdir` command
 
 ```bash
 $ mkdir ngs_course/rnaseq
@@ -64,7 +64,7 @@ rnaseq/
 
 * **`scripts/`**: This folder will contain the scripts that you use to run analyses at different points in the workflow.
 
-* **`logs/`**: It is important to keep track of the commands you run and the specific pararmeters you used, but also to have a record of any standard output that is generated while running the command. 
+* **`logs/`**: It is important to keep track of the commands you run and the specific parameters you used, but also to have a record of any standard output that is generated while running the command. 
 
 
 Let's create a directory for our project by changing into `rnaseq` and then using `mkdir` to create the five directories.
@@ -127,7 +127,7 @@ In your lab notebook, you likely keep track of the different reagents and kits u
 
 Keeping notes on what happened in what order, and what was done, is essential for reproducible research. If you don’t keep good notes, then you will forget what you did pretty quickly, and if you don’t know what you did, no one else has a chance. 
 
-After setting up the filesystem and running a workflow it is useful to have a **README file within your project** directory. An example README is shown below: 
+After setting up the project directories and running a workflow it is useful to have a **README file within your project** directory. An example README is shown below: 
 
 ```bash
 ## README ##
