@@ -230,7 +230,7 @@ Within the 'Site Manager' window, do the following:
 
 ######Filezilla - Step 3
 
-In FileZilla, on the left side of the screen navigate to the location you would like to save the file, and on the right side of the screen navigate through your remote directory to the file `/home/ecommons_id/unix_workshop/rnaseq_project/results/fastqc_untrimmed_reads/Mov10_oe1.html`. Double click on the .html file to transfer a copy, or click and drag over to the right hand panel.
+In FileZilla, on the left side of the screen navigate to the location you would like to save the file, and on the right side of the screen navigate through your remote directory to the file `/home/userID/unix_workshop/rnaseq_project/results/fastqc_untrimmed_reads/Mov10_oe1.html`. Double click on the .html file to transfer a copy, or click and drag over to the right hand panel.
 
 Open the .html file to view the report.
 
@@ -256,7 +256,7 @@ The "Overrepresented sequences" table displays the sequences (at least 20 bp) th
 >The other output of FastQC is a .zip file. These .zip files need to be unpacked with the `unzip` program. If we try to `unzip` them all at once:
 >
 >```
->$ cd ~/ngs_course/rnaseq/results/fastqc_untrimmed_reads/    
+>$ cd ~/unix_workshop/rnaseq_project/results/fastqc_untrimmed_reads/    
 >$ unzip *.zip
 >```
 >
@@ -273,7 +273,7 @@ The "Overrepresented sequences" table displays the sequences (at least 20 bp) th
 >
 >This loop is basically a simple program. When it runs
 >
->```
+>```bash
 >$ for zip in *.zip
 >> do
 >> unzip $zip
@@ -289,7 +289,7 @@ The "Overrepresented sequences" table displays the sequences (at least 20 bp) th
 >
 >What information is contained in the unzipped folder?
 >
->```
+>```bash
 >$ ls -lh Mov10_oe_1.subset_fastqc
 >$ head Mov10_oe_1.subset_fastqc/summary.txt
 >```
@@ -297,7 +297,7 @@ The "Overrepresented sequences" table displays the sequences (at least 20 bp) th
 >To save a record, let's `cat` all `fastqc summary.txt` files into one `full_report.txt` and move this to `~/ngs_course/rnaseq/docs`. 
 >You can use wildcards in paths as well as file names.  Do you remember how we said `cat` is really meant for concatenating text files?
 >    
->`$ cat */summary.txt > ~/ngs_course/rnaseq/logs/fastqc_summaries.txt`
+>`$ cat */summary.txt > ~/unix_workshop/rnaseq_project/logs/fastqc_summaries.txt`
 
 
 ##Quality Control - Trimming
