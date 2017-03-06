@@ -67,7 +67,7 @@ Once logged in, you should see the Orchestra news and the command prompt:
 $
 ```
 
-The command prompt will have some characters before it, something like "-bash-4.1", this is telling you what the name of the computer you are working on is.
+The command prompt will have some characters before it, something like `[rc_training01@loge ~]`, this is telling you what the name of the computer you are working on is.
 
 The first command we will type on the command prompt will be to start a so-called "interactive session" on Orchestra.
 
@@ -75,7 +75,7 @@ The first command we will type on the command prompt will be to start a so-calle
 $ bsub -Is -q interactive bash
 ```
 
-Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `rc_training01@clarinet002-062`. *We will be explaining what this means in more detail later this afternoon when we talk about HPC and Orchestra.* 
+Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `[rc_training01@clarinet002-074 ~]`. *We will be explaining what this means in more detail later this afternoon when we talk about HPC and Orchestra.* 
 
 Make sure that your command prompt is now preceded by a character string that contain words like "clarinet", "bassoon", etc.
 
