@@ -67,8 +67,9 @@ Let's add 2 variables named "genome" and "gtf", these will contain the locations
 Next, make sure you load all the modules for the script to run. This is important so your script can run independent of any "prep" steps that need to be run beforehand:
     
     # set up our software environment...
-    module load seq/samtools
-    module load seq/htseq
+    module load seq/samtools/1.3
+    module load seq/htseq/0.6.1p1
+    module load seq/STAR/2.5.2b
 
 We'll keep the output directory creation, however, we will add the `-p` option this will make sure that `mkdir` will create the directory only if it does not exist, and it won't throw an error if it does exist.
 ```
