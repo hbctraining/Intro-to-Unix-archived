@@ -36,7 +36,7 @@ $ pwd
 ```
 this should give the result: `/home/user_name`
 
-Now, make a directory for the RNA-Seq analysis within the `ngs_course` folder using the `mkdir` command
+Now, make a directory for the RNA-Seq analysis within the `unix_workshop` folder using the `mkdir` command
 
 ```bash
 $ mkdir unix_workshop/rnaseq
@@ -99,13 +99,13 @@ $ mkdir untrimmed_fastq
 $ mkdir trimmed_fastq
 ```
     
-The raw fastq data we will be working with is currently in the `unix_lesson/raw_fastq` directory. We need to copy the raw fastq files to our `untrimmed_fastq` directory:
+The raw fastq data we will be working with is currently in the `unix_workshop/raw_fastq` directory. We need to copy the raw fastq files to our `untrimmed_fastq` directory:
 
 ```bash
 $ cp ~/unix_workshop/raw_fastq/*fq untrimmed_fastq
 ```
 
-Later in the workflow when we map these reads to the genome, we will require reference/genome data to map against. These files are also in the `unix_lesson` directory, you can copy the entire folder over into `data`:
+Later in the workflow when we map these reads to the genome, we will require reference/genome data to map against. These files are also in the `unix_workshop` directory, you can copy the entire folder over into `data`:
 
 ```bash
 $ cp -r ~/unix_workshop/reference_data .    ## note the destination "."
@@ -131,7 +131,7 @@ After setting up the project directories and running a workflow it is useful to 
 
 ```bash
 ## README ##
-## This directory contains data generated from the NGS Data Analysis Course
+## This directory contains data generated from the UNIX workshop
 ## Date: November 1st, 2016
 
 There are five directories in this directory:
