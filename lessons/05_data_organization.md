@@ -39,7 +39,7 @@ this should give the result: `/home/user_name`
 Now, make a directory for the RNA-Seq analysis within the `ngs_course` folder using the `mkdir` command
 
 ```bash
-$ mkdir ngs_course/rnaseq
+$ mkdir unix_workshop/rnaseq
 ```
 
 Next you want to set up the following structure within your project directory to keep files organized:
