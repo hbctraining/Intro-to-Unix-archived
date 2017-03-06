@@ -164,9 +164,9 @@ For any bioinformatics experiment you will have to go through a series of steps 
 ## The dataset
 The dataset we will be using tomorrow is part of a larger study described in [Kenny PJ et al, Cell Rep 2014](http://www.ncbi.nlm.nih.gov/pubmed/25464849). 
 
-The authors are investigating interactions between various genes involved in Fragile X syndrome, a disease of aberrant protein production, which results in cognitive impairment and autistic-like features. **The authors sought to show that RNA helicase MOV10 regulates the translation of RNAs involved in Fragile X syndrome.** From this study we are using the [RNA-Seq](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE50499) data which is publicly available in the [SRA](http://www.ncbi.nlm.nih.gov/sra). 
+The authors investigate interactions between various genes involved in Fragile X syndrome, a disease of aberrant protein production, which results in cognitive impairment and autistic-like features. **The authors sought to show that RNA helicase MOV10 regulates the translation of RNAs involved in Fragile X syndrome.** From this study we are using the [RNA-Seq](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE50499) data which are publicly available at [SRA](http://www.ncbi.nlm.nih.gov/sra). 
 
-In addition to the raw sequence data we also need to collect the **metadata** which is made available on GEO and SRA. Some relevant metadata for our dataset is provided below:
+In addition to the raw sequence data, we also need the **metadata** for this experiment from GEO/SRA; some relevant metadata for this dataset is listed below:
 
 * The RNA was extracted from **HEK293F cells** that were transfected with a MOV10 transgene or an irrelevant siRNA.  
 * The cDNA libraries for this dataset are **stranded**. 
@@ -176,12 +176,11 @@ In addition to the raw sequence data we also need to collect the **metadata** wh
 
 ![Experimental Design](../img/exp_design.png)
 
-
 ***
 
 **Exercise (Homework)**
 
-Take a moment to create a README for the `rnaseq` folder (hint: use `nano` to create the file). Give a short description of the project and brief descriptions of the types of files you will be storing within each of the project sub-directories. 
+Take a moment to create a README for the `rnaseq` folder using `nano`. Give a short description of the project and brief descriptions of the types of files that are or will be within each of the sub-directories (to the best of your knowledge). 
 
 ***
 
