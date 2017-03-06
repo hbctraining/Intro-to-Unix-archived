@@ -35,34 +35,29 @@ We will spend most of our time learning about the basics of the shell by manipul
 
 Since we are going to be working with this data on our remote server, **Orchestra**, we first need to log onto the server. After we're logged on, we will each make our own copy of the example data folder.
 
-#### Logging onto Orchestra with Macs
+### Logging in
 
-Using the Terminal, you can use the command 'ssh' and your eCommons username to login. Type:
+**With Macs**
+
+Macs have a utility application called "**Terminal**" for performing tasks on the command line (shell), both locally and on remote machines. We will be using it to log into Orchestra.
+
+**With Windows**
+
+By default, there is no terminal for the bash shell available in the Windows OS, so you have to use a downloaded program, "**Git BASH**". Git BASH is part of the [Git for Windows](https://git-for-windows.github.io/) download, and is a shell (bash) emulator.
+
+> You can also use [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) to log in to remote machines from Windows computers, but it is a little more involved and has different capabilities.
+
+**Let's log in**
+
+Type in the following command with your username to login:
 
 ```bash
 ssh username@orchestra.med.harvard.edu
 ```
 
-You will receive a prompt for your password, and you should type in your ECommons password. 
+You will receive a prompt for your password, and you should type in your associated password; note that the cursor will *not move* as you type in your password.
 
-#### Logging onto Orchestra with Windows
-
-By default, there is no terminal for the bash shell available in the Windows OS, so you have to use a downloaded program, **[Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)**.
-
-When you open Putty, you will see the following GUI.
-
-![Putty window](../img/putty-1.PNG)
-
-Type in "orchestra.med.harvard.edu" in the window under "Host Name (or IP address) and click on "Open"
-
-![Connect to Orchestra](../img/putty-2.PNG)
-
-A warning window will pop up the first time you try to connect to a cluster (remote server), say "Yes". Once you do that, you should be able to enter your login ID which is your eCommons ID. Add ID and press enter.
-
-![Log in](../img/putty-5.PNG)
-
-Once you press enter, it will prompt you for a password. Type in your password, when you do this nothing will appear on the screen until you press enter. When you press enter, the interface will change and you have started a bash terminal.
-
+> A warning might pop up the first time you try to connect to a remote machine, type "Yes" or "Y". 
 
 #### Copying example data folder
 
@@ -80,7 +75,7 @@ The first command we will type on the command prompt will be to start a so-calle
 $ bsub -Is -q interactive bash
 ```
 
-Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `rsk27@clarinet002-062`. *We will be explaining what this means in more detail later this afternoon when we talk about HPC and Orchestra.* 
+Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `rc_training01@clarinet002-062`. *We will be explaining what this means in more detail later this afternoon when we talk about HPC and Orchestra.* 
 
 Make sure that your command prompt is now preceded by a character string that contain words like "clarinet", "bassoon", etc.
 
