@@ -102,13 +102,13 @@ $ mkdir trimmed_fastq
 The raw fastq data we will be working with is currently in the `unix_lesson/raw_fastq` directory. We need to copy the raw fastq files to our `untrimmed_fastq` directory:
 
 ```bash
-$ cp ~/ngs_course/unix_lesson/raw_fastq/*fq untrimmed_fastq
+$ cp ~/unix_workshop/raw_fastq/*fq untrimmed_fastq
 ```
 
 Later in the workflow when we map these reads to the genome, we will require reference/genome data to map against. These files are also in the `unix_lesson` directory, you can copy the entire folder over into `data`:
 
 ```bash
-$ cp -r ~/ngs_course/unix_lesson/reference_data .    ## note the destination "."
+$ cp -r ~/unix_workshop/reference_data .    ## note the destination "."
 ```
 
 ### Documenting
