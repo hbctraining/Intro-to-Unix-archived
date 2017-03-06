@@ -1,6 +1,6 @@
 ---
 title: "Data Management and Project Organization"
-author: "Mary Piper, Meeta Mistry"
+author: "Mary Piper, Meeta Mistry, Radhika Khetani"
 date: "Wednesday October 26, 2016"
 ---
 
