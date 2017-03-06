@@ -70,7 +70,7 @@ rnaseq/
 Let's create a directory for our project by changing into `rnaseq` and then using `mkdir` to create the five directories.
 
 ```bash
-$ cd ngs_course/rnaseq
+$ cd unix_workshop/rnaseq
 $ mkdir data meta results scripts logs
 ``` 
 
@@ -92,7 +92,7 @@ drwxrwsr-x 2 rsk27 rsk27   0 Jun 17 11:21 scripts
 Now we will create the subdirectories to setup for our RNA-Seq analysis, and populate them with data where we can. We need to create two directories within the `data` directory, one folder for untrimmed/raw reads and another for trimmed/cleaned up reads: 
 
 ```bash
-$ cd ~/ngs_course/rnaseq/data
+$ cd ~/unix_workshop/rnaseq/data
 
 $ mkdir untrimmed_fastq
 
