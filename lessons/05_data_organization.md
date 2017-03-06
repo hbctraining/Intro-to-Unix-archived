@@ -23,9 +23,7 @@ Before we start talking about how to organize an RNA-Seq project, we will talk a
 
 ### Planning for and organizing large datasets/analyses
 
-We're going to assume that you've already designed a beautiful sequencing experiment to address your biological question, collected appropriate samples, and that you have enough statistical power. [More on this coming up later.]
-
-Sequencing projects can quickly accumulate hundreds of files across tens of folders and occupy gigabytes/petabytes of space with pertinent, as well as redundant information. Hence, before you start any type of sequencing data analysis it is best to make sure you have the necessary storage space available, a data archiving plan in place, and most importantly, that you stay as organized as possible. As you can imagine, when performing such an analysis, wherein a large number of datasets are processed using a workflow with lots of steps, requires a focus on data provenance. This is important for many reasons, including publishing, data sharing, reusing methods etc. 
+Sequencing projects can quickly accumulate hundreds of files across tens of folders and occupy gigabytes/petabytes of space with pertinent, as well as redundant information. Therefore, befire you start any type of data analysis, it is best to make sure you have the necessary storage space available, a data archiving plan in place, and most importantly, that you stay as organized as possible during the analysis. As you can imagine, performing an analysis with a large number of datasets that get processed using multi-step workflows requires a focus on data provenance. This is important for many reasons, including publishing, data sharing, reusing methods/worksflows etc. 
 
 We won't be talking much about planning for storage and archiving, but will focus on how to organize an RNA-Seq experiment and thereby making data provenance easier.
 
