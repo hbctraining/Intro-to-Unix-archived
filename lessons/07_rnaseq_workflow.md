@@ -183,7 +183,7 @@ Scroll through the SAM file and see how the fields correspond to what we expecte
 
 Index the BAM file for visualization with IGV:
 
-    $ samtools index results/STAR/Mov10_oe_1__Aligned.sortedByCoord.out.bam
+    $ samtools index results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam
 
 **Transfer files to your laptop using the command line**
 
