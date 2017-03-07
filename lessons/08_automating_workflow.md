@@ -115,7 +115,7 @@ to use these variables so that it will run the steps of the analytical workflow 
     STAR --runThreadN 6 --genomeDir $genome --readFilesIn $fq --outFileNamePrefix $align_out --outFilterMultimapNmax 10 --outSAMstrandField intronMotif --outReadsUnmapped Fastx --outSAMtype BAM SortedByCoordinate --outSAMunmapped Within --outSAMattributes NH HI NM MD AS
 
     # Create BAM index
-    samtools index $align_in
+    samtools index $counts_input_bam
 
     # Count mapped reads
     htseq-count --stranded reverse --format bam $counts_input_bam $gtf  >  $counts
