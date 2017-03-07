@@ -198,7 +198,7 @@ The following 2 files need to be moved from Orchestra to your local machine,
 `results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam.bai` 
 
 ```
-$ scp user_name@orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
+$ scp user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
 ```
 
 
