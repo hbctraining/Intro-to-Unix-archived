@@ -466,7 +466,7 @@ for infile in *.fq
 do
   
   # Create names for the output trimmed files
-  base=`basename .subset.fq $infile`
+  base=`basename $infile .subset.fq`
   outfile=$base.qualtrim25.minlen35.fq
  
   # Run Trimmomatic command
