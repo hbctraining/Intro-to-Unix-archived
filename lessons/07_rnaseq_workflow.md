@@ -224,9 +224,9 @@ Index the BAM file for visualization with IGV:
 $ samtools index results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam
 ```
 
-Use FileZilla to copy the following files to your local machine,
+Use _**FileZilla**_ to copy the following files to your local machine:
  
-`results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam`,
+`results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam`
 
 `results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam.bai` 
 
@@ -240,7 +240,7 @@ Use FileZilla to copy the following files to your local machine,
 >```bash
 >$ scp user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
 >```
-
+>
 
 **Visualize**
 
