@@ -169,6 +169,7 @@ The basic options for **mapping reads** to the genome using STAR are as follows:
 We will also be using some advanced options:
 * `--outSAMtype`: output filetype (SAM default)
 * `--outSAMUnmapped`: what to do with unmapped reads
+* `--outSAMattributes`: SAM attributes
 
 Note that default filtering is applied in which the maximum number of multiple alignments allowed for a read is set to 10. If a read exceeds this number there is no alignment output. To change the default you can use `--outFilterMultimapNmax`, but for this lesson we will leave it as default. The advanced parameters that we are going to use are described below:
 
