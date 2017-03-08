@@ -1,7 +1,7 @@
 ---
 title: "RNA-Seq workflow"
 author: "Mary Piper, Meeta Mistry, Bob Freeman"
-date: "Thursday, March 3, 2017"
+date: "Wednesday, March 8, 2017"
 ---
 
 Approximate time: 90 minutes
