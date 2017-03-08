@@ -77,7 +77,6 @@ In the script, we will eventually loop over all of our files and have the cluste
 **NOTE: if you did not follow the last section, please execute the following command:** (this will copy over the required files into your home directory.)
 
 ```bash
-
 $ cp -r /groups/hbctraining/unix_workshop_other/trimmed_fastq data/
 
 ```
@@ -134,7 +133,7 @@ Aligning reads using STAR is a two step process:
 
 > A quick note on shared databases for human and other commonly used model organisms. The Orchestra cluster has a designated directory at `/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databases, such as NCBI and PDB. So when using a tool and requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
 
-```
+```bash
 $ ls -l /groups/shared_databases/igenome/
 ```
 
@@ -179,8 +178,9 @@ Now let's put it all together! The full STAR alignment command is provided below
 
 > If you like you can copy-paste it directly into your terminal. Alternatively, you can manually enter the command, but it is advisable to first type out the full command in a text editor (i.e. [Sublime Text](http://www.sublimetext.com/) or [Notepad++](https://notepad-plus-plus.org/)) on your local machine and then copy paste into the terminal. This will make it easier to catch typos and make appropriate changes. 
 
-```
-$ STAR --runThreadN 6 --genomeDir /groups/hbctraining/unix_workshop_other/reference_STAR \
+```bash
+$ STAR --runThreadN 6 \
+--genomeDir /groups/hbctraining/unix_workshop_other/reference_STAR \
 --readFilesIn data/trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq \
 --outFileNamePrefix results/STAR/Mov10_oe_1_ \
 --outSAMtype BAM SortedByCoordinate \
@@ -209,7 +209,7 @@ These fields are described briefly below, but for more detailed information the 
 
 Let's take a quick look at our alignment. To do so we first convert our BAM file into SAM format using samtools and then pipe it to the `less` command. This allows us to look at the contents without having to write it to file (since we don't need a SAM file for downstream analyses).
 
-```
+```bash
 $ samtools view -h results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam | less
 
 ```
@@ -220,7 +220,9 @@ Scroll through the SAM file and see how the fields correspond to what we expecte
 
 Index the BAM file for visualization with IGV:
 
-    $ samtools index results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam
+```bash
+$ samtools index results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam
+```
 
 Use FileZilla to copy the following files to your local machine,
  
@@ -230,14 +232,14 @@ Use FileZilla to copy the following files to your local machine,
 
 
 > **NOTE: You can also transfer files to your laptop using the command line**
-
-Similar to the `cp` command, there is a command that allows you to securely copy files between computers. The command is called `scp` and allows files to be copied to, from, or between different hosts. It uses ssh for data transfer and provides the same authentication and same level of security as `ssh`. 
-
-First, identify the location of the _origin file_ you intend to copy, followed by the _destination_ of that file. Since the original file is located on Orchestra, this requires you to provide remote host and login information.
-
-```
-$ scp user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
-```
+>
+>Similar to the `cp` command, there is a command that allows you to securely copy files between computers. The command is called `scp` and >allows files to be copied to, from, or between different hosts. It uses ssh for data transfer and provides the same authentication and >same level of security as `ssh`. 
+>
+>First, identify the location of the _origin file_ you intend to copy, followed by the _destination_ of that file. Since the original file >is located on Orchestra, this requires you to provide remote host and login information.
+>
+>```bash
+>$ scp >user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.ba>m* /path/to/directory_on_laptop
+>```
 
 
 **Visualize**
