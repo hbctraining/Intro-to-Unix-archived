@@ -16,7 +16,7 @@ Approximate time: 90 minutes
 
 ### Setting up
 
-To get started with this lesson, we will login to the cluster but this time we are going to ask for 6 cores. We will do this by adding `-n 6` to our busb command:
+To get started with this lesson, we will login to the cluster but this time we are going to ask for 6 cores. We will do this by adding `-n 6` to our bsub command:
 
 ```
 ssh username@orchestra.med.harvard.edu
