@@ -1,6 +1,6 @@
 ---
 title: "RNA-Seq workflow"
-author: "Meeta Mistry, Bob Freeman"
+author: "Mary Piper, Meeta Mistry, Bob Freeman"
 date: "Thursday, March 3, 2017"
 ---
 
@@ -27,12 +27,11 @@ $ bsub -Is -n 6 -q interactive bash
 
 Change directories into the `unix_workshop` directory and copy the `reference_data` folder into your project directory:
 
+```bash
+$ cd ~/unix_workshop/rnaseq_project
 ```
-$ cp -r reference_data rnaseq_project/data
 
-```
-
-Now move into the `rnaseq_project` directory. You should have a directory tree setup similar to that shown below. it is best practice to have all files you intend on using for your workflow present within the same directory. In our case, we have our original FASTQ files and post-trimming data generated in the previous section. We also have all reference data files that will be used in downstream analyses.
+You should have a directory tree setup similar to that shown below. it is best practice to have all files you intend on using for your workflow present within the same directory. In our case, we have our original FASTQ files and post-trimming data generated in the previous section. We also have all reference data files that will be used in downstream analyses.
 
 ```
 rnaseq_project
@@ -59,19 +58,17 @@ We previously described a general overview of the steps involved in RNA-Seq anal
 
 ![workflow](../img/workflow_alignment.png)
 
-We'll first perform the commands for a single sample. Next, we'll create a script for the commands and test it. Finally, we'll modify the script to run on the cluster.
 
 So let's get started by loading up some of the modules for tools we need for this section: 
 
-```
- $ module load seq/samtools/1.3 seq/htseq/0.6.1p1 seq/STAR/2.5.2b
+```bash
+ $ module load seq/STAR/2.5.2b seq/samtools/1.3 seq/htseq/0.6.1p1
 ```
 
 Create an output directory for our alignment files:
 
 ```bash
 $ mkdir results/STAR
-
 ```
 
 In the script, we will eventually loop over all of our files and have the cluster work on each one in serial, then in parallel. For now, we're going to work on just one to set up our workflow.  To start we will use the trimmed first replicate in the Mov10 overexpression group, `Mov10_oe_1.qualtrim25.minlen35.fq` 
@@ -85,60 +82,99 @@ $ cp -r /groups/hbctraining/unix_workshop_other/trimmed_fastq data/
 
 ```
 
-### Alignment to genome
+## Read Alignment
 The alignment process consists of choosing an appropriate reference genome to map our reads against, and performing the read alignment using one of several splice-aware alignment tools such as [STAR](https://github.com/alexdobin/STAR) or [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml) (HISAT2 is a successor to both HISAT and TopHat2). The choice of aligner is a personal preference and also dependent on the computational resources that are available to you.
  
-For this workshop we will be using STAR (Spliced Transcripts Alignment to a Reference), an aligner designed to specifically address many of the challenges of RNAseq read mapping. STAR is shown to have **high accuracy** and outperforms other aligners by more than a **factor of 50 in mapping
-speed (but also requires quite a bit of memory**). More details on the algorithm itself can be found in the [STAR publication](http://bioinformatics.oxfordjournals.org/content/early/2012/10/25/bioinformatics.bts635). 
+For this workshop we will be using STAR (Spliced Transcripts Alignment to a Reference), an aligner designed to specifically address many of the challenges of RNAseq read mapping. STAR is shown to have **high accuracy** and outperforms other aligners by more than a **factor of 50 in mapping speed (but also requires quite a bit of memory**). 
 
-Aligning reads using STAR is a two step process: 
+### STAR Alignment Strategy
 
-1. Create a genome index
-2. Map reads to the genome.
+STAR is shown to have **high accuracy** and outperforms other aligners by more than a **factor of 50 in mapping speed(but also requires quite a bit of memory)**. The algorithm achieves this highly efficient mapping by performing a two-step process:
 
-> A quick note on shared databases for human and other commonly used model organisms. The Orchestra cluster has a designated directory at `/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databasese such as NCBI and PDB. So when using a tool and requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
+1. Seed searching
+2. Clustering, stitching, and scoring
 
-Indexing of the reference genome has already been done for you. **You do not need to run this code**. For this step you need to provide a reference genome and an annotation file. For this workshop we are using reads that originate from a small subsection of chromosome 1 (~300,00 reads) and so we are using only chr1 as the reference genome, and have provided the appropriate indices. Depending on the size of your genome, this can take awhile. 
+#### Seed searching
 
-The basic options to **generate genome indices** using STAR as follows:
+For every read that STAR aligns, STAR will search for the longest sequence that exactly matches the reference genome:
 
+![STAR_step1](../img/alignment_STAR_step1.png)
+	
+The different parts of the read that are mapped separately are called 'seeds'. So the first MMP that is mapped to the genome is called *seed1*.
+
+STAR will then search again for only the unmapped portion of the read to find the next longest sequence that exactly matches the reference genome, which will be *seed2*. 
+
+![STAR_step2](../img/alignment_STAR_step2.png)
+
+This sequential searching of only the unmapped portions of reads underlies the efficiency of the STAR algorithm. STAR uses an uncompressed suffix array (SA) to efficiently search for the longest matching portions of the read, this allows for quick searching against even the largest reference genomes. Other slower aligners use algorithms that often search for the entire read sequence before splitting reads and performing iterative rounds of mapping. More details on the algorithm itself can be found in the [STAR publication](http://bioinformatics.oxfordjournals.org/content/early/2012/10/25/bioinformatics.bts635). 
+
+**If STAR does not find an exact matching sequence** for each part of the read due to mismatches or indels, the seed will be extended.
+
+![STAR_step3](../img/alignment_STAR_step3.png)
+
+**If extension does not give a good alignment**, then the poor quality or adapter sequence (or other contaminating sequence) will be soft clipped.
+
+![STAR_step4](../img/alignment_STAR_step4.png)
+
+
+#### Clustering, stitching, and scoring
+
+The separate seeds are stitched together to create a complete read by first clustering the seeds together based on proximity to a set of seeds that have good alignment scores and are not multi-mapping.
+
+Then the seeds are stitched together based on the best alignment for the read (scoring based on mismatches, indels, gaps, etc.). 
+
+![STAR_step5](../img/alignment_STAR_step5.png)
+
+## Running STAR
+
+Aligning reads using STAR is a two step process:   
+
+1. Create a genome index 
+2. Map reads to the genome
+
+> A quick note on shared databases for human and other commonly used model organisms. The Orchestra cluster has a designated directory at `/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databases, such as NCBI and PDB. So when using a tool and requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
+
+```
+$ ls -l /groups/shared_databases/igenome/
+```
+
+### Creating a genome index
+
+For this workshop we are using reads that originate from a small subsection of chromosome 1 (~300,000 reads) and so we are using only chr1 as the reference genome. Therefore, we cannot use any of the ready-made indices available in the `/groups/shared_databases/` folder.
+
+For this workshop, we have already indexed the reference genome for you as this can take a while. We have provided the code below that you would use to index the genome for your future reference, but please **do not run the code below**. For indexing the reference genome, a reference genome (FASTA) is required and an annotation file (GTF or GFF3) is suggested a more accurate alignment of the reads. 
+
+The basic options to **generate genome indices** using STAR are as follows:
 
 * `--runThreadN`: number of threads
 * `--runMode`: genomeGenerate mode
 * `--genomeDir`: /path/to/store/genome_indices
-* `--genomeFastaFiles`: /path/to/FASTA_file 
-* `--sjdbGTFfile`: /path/to/GTF_file
+* `--genomeFastaFiles`: /path/to/FASTA_file (reference genome)
+* `--sjdbGTFfile`: /path/to/GTF_file (gene annotation)
 * `--sjdbOverhang`: readlength -1
 
 ```
-** Do not run this**
-STAR --runThreadN 5 --runMode genomeGenerate --genomeDir ./ --genomeFastaFiles chr1.fa --sjdbGTFfile chr1-hg19_genes.gtf --sjdbOverhang 99
+** DO NOT RUN**
+STAR --runThreadN 6 --runMode genomeGenerate --genomeDir ./ --genomeFastaFiles chr1.fa --sjdbGTFfile chr1-hg19_genes.gtf --sjdbOverhang 99
 
 ```
 
-The basic options for **mapping reads** to the genome using STAR is as follows:
+The basic options for **mapping reads** to the genome using STAR are as follows:
 
 * `--runThreadN`: number of threads
 * `--readFilesIn`: /path/to/FASTQ_file
 * `--genomeDir`: /path/to/genome_indices
 * `--outFileNamePrefix`: prefix for all output files
 
-
-The STAR aligner first looks for the longest sequence that exactly matches one or more locations on the reference genome. For each match, the algorithm chooses to extend (allowing for a certain number of mismatches), trim poor quality sequences (if quality of the extension is low), or the remaining unmapped portion is used as a seed and mapped elsewhere. The separate seeds are stitched together to create a complete read after clustering the seeds together based on proximity.  
-
-![star](../img/star.png)
-
-Additionally, default filtering is applied in which the maximum number of multiple alignments allowed for a read is set to 20. If a read exceeds this number there is no alignment output. To change the default you can use `--outFilterMultimapNmax`, but for this lesson we will leave it as default. The advanced parameters that we are going to use are described below:
-
-
+We will also be using some advanced options:
 * `--outSAMtype`: output filetype (SAM default)
 * `--outSAMUnmapped`: what to do with unmapped reads
-* `--outSAMattributes`: specify SAM attributes in output file
 
+Note that default filtering is applied in which the maximum number of multiple alignments allowed for a read is set to 10. If a read exceeds this number there is no alignment output. To change the default you can use `--outFilterMultimapNmax`, but for this lesson we will leave it as default. The advanced parameters that we are going to use are described below:
 
 More details on STAR and its functionality can be found in the [user manual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf), we encourage you to peruse through to get familiar with all available options.
 
-Now let's put it all together! The full STAR command is provided below.
+Now let's put it all together! The full STAR alignment command is provided below.
 
 > If you like you can copy-paste it directly into your terminal. Alternatively, you can manually enter the command, but it is advisable to first type out the full command in a text editor (i.e. [Sublime Text](http://www.sublimetext.com/) or [Notepad++](https://notepad-plus-plus.org/)) on your local machine and then copy paste into the terminal. This will make it easier to catch typos and make appropriate changes. 
 
@@ -156,7 +192,7 @@ $ STAR --runThreadN 6 --genomeDir /groups/hbctraining/unix_workshop_other/refere
 How many files do you see in your output directory? Using the `less` command take a look at `Mov10_oe_1_Log.final.out` and answer the following questions:  
 
 1. How many reads are uniquely mapped?
-2. How many reads map to more than 20 locations on the genome?
+2. How many reads map to more than 10 locations on the genome?
 3. How many reads are unmapped due to read length?
 
 
@@ -185,17 +221,18 @@ Index the BAM file for visualization with IGV:
 
     $ samtools index results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam
 
-**Transfer files to your laptop using the command line**
-
-We previously used FileZilla to transfer files from Orchestra to your laptop. However, there is another way to do so using the command line interface. Similar to the `cp` command to copy there is a command that allows you to securely copy files between computers. The command is called `scp` and allows files to be copied to, from, or between different hosts. It uses ssh for data transfer and provides the same authentication and same level of security as ssh. 
-
-First, identify the location of the _origin file_ you intend to copy, followed by the _destination_ of that file. Since the origin file is located on Orchestra, this requires you to provide remote host and login information.
-
-The following 2 files need to be moved from Orchestra to your local machine,
+Use FileZilla to copy the following files to your local machine,
  
 `results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam`,
 
 `results/STAR/Mov10_oe_1_Aligned.sortedByCoord.out.bam.bai` 
+
+
+> **NOTE: You can also transfer files to your laptop using the command line**
+
+Similar to the `cp` command, there is a command that allows you to securely copy files between computers. The command is called `scp` and allows files to be copied to, from, or between different hosts. It uses ssh for data transfer and provides the same authentication and same level of security as `ssh`. 
+
+First, identify the location of the _origin file_ you intend to copy, followed by the _destination_ of that file. Since the original file is located on Orchestra, this requires you to provide remote host and login information.
 
 ```
 $ scp user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
