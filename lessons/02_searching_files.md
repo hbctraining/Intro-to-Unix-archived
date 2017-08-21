@@ -9,7 +9,7 @@ Approximate time: 60 minutes
 ## Learning objectives
 
 - Learn how to search for characters or patterns in a text file using the `grep` command
-- Learn about output redirection
+- Learn how to write to file and append to file using output redirection
 - Explore how to use the pipe (`|`) character to chain together commands
 
 
