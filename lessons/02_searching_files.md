@@ -36,8 +36,8 @@ $ grep NNNNNNNNNN Mov10_oe_1.subset.fq
 
 We get back a lot of lines.  What if we want to see the whole fastq record for each of these reads? 
 
-To return the whole fastq record for each of the reads  can use the '-B' and '-A' arguments for grep to return the matched line plus one before (-B 1) and two
-lines after (-A 2). Since each record is four lines and the second line is the sequence, this should
+To return the whole fastq record for each of the reads  can use the '-B' and '-A' arguments for grep to return the matched line plus one before (-B1) and two
+lines after (-A2). Since each record is four lines and the second line is the sequence, this should
 give the whole record.
 
 ```bash
