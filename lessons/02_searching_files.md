@@ -6,17 +6,19 @@ date: "Thursday, March 3, 2017"
 
 Approximate time: 60 minutes
 
-## Learning Objectives
+## Learning objectives
 
-* learn the `grep` command and useful options
-* learn about output redirection 
-* use the pipe (`|`) character to chain together commands
+- Learn how to search for characters or patterns in a text file using the `grep` command
+- Learn about output redirection
+- Explore how to use the pipe (`|`) character to chain together commands
+
+
 
 ## Searching files
 
-We showed a little how to search within a file using `less`. We can also
+We went over how to search within a file using `less`. We can also
 search within files without even opening them, using `grep`. Grep is a command-line
-utility for searching plain-text data sets for lines matching a string or regular expression.
+utility for searching plain-text data sets for lines matching a pattern or regular expression (regex).
 Let's give it a try!
 
 We are going to practice searching with `grep` using our fastq files, which contain the sequencing reads (nucleotide sequences) output from a sequencing facility. Each sequencing read in a FASTQ file is associated with four lines of output, with the first line (header line) always starting with an `@` symbol. A whole fastq record for a single read should appear similar to the following:
@@ -25,46 +27,42 @@ We are going to practice searching with `grep` using our fastq files, which cont
 	CACTTGTAAGGGCAGGCCCCCTTCACCCTCCCGCTCCTGGGGGANNNNNNNNNNANNNCGAGGCCCTGGGGTAGAGGGNNNNNNNNNNNNNNGATCTTGG
 	+
 	@?@DDDDDDHHH?GH:?FCBGGB@C?DBEGIIIIAEF;FCGGI#########################################################
-	
-Suppose we want to see how many reads in our file `Mov10_oe_1.subset.fq` are really bad, with 10 consecutive Ns. We can search for the string NNNNNNNNNN in the file using the `grep` command. 
+
+Suppose we want to see how many reads in our file `Mov10_oe_1.subset.fq` are really bad, with 10 consecutive Ns (`NNNNNNNNNN`).
 
 ```bash
-$ cd ~/unix_workshop/raw_fastq
+$ cd ~/ngs_course/unix_lesson/raw_fastq
 
 $ grep NNNNNNNNNN Mov10_oe_1.subset.fq
 ```
 
-We get back a lot of lines.  What if we want to see the whole fastq record for each of these reads? 
-
-To return the whole fastq record for each of the reads  can use the '-B' and '-A' arguments for grep to return the matched line plus one before (-B1) and two
-lines after (-A2). Since each record is four lines and the second line is the sequence, this should
-give the whole record.
+We get back a lot of lines.  What if we want to see the whole fastq record for each of these reads? We can use the `-B` and `-A` arguments for grep to return the matched line plus one before (`-B 1`) and two lines after (`-A 2`). Since each record is four lines and the second line is the sequence, this should return the whole record.
 
 ```bash
-$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq
+$ grep -B 1 -A 2 NNNNNNNNNN Mov10_oe_1.subset.fq
 ```
 
-for example:
+```
+@HWI-ST330:304:H045HADXX:1:1101:1111:61397
+CACTTGTAAGGGCAGGCCCCCTTCACCCTCCCGCTCCTGGGGGANNNNNNNNNNANNNCGAGGCCCTGGGGTAGAGGGNNNNNNNNNNNNNNGATCTTGG
++
+@?@DDDDDDHHH?GH:?FCBGGB@C?DBEGIIIIAEF;FCGGI#########################################################
+--
+@HWI-ST330:304:H045HADXX:1:1101:1106:89824
+CACAAATCGGCTCAGGAGGCTTGTAGAAAAGCTCAGCTTGACANNNNNNNNNNNNNNNNNGNGNACGAAACNNNNGNNNNNNNNNNNNNNNNNNNGTTGG
++
+?@@DDDDDB1@?:E?;3A:1?9?E9?<?DGCDGBBDBF@;8DF#########################################################
+```
 
-	@HWI-ST330:304:H045HADXX:1:1101:1111:61397
-	CACTTGTAAGGGCAGGCCCCCTTCACCCTCCCGCTCCTGGGGGANNNNNNNNNNANNNCGAGGCCCTGGGGTAGAGGGNNNNNNNNNNNNNNGATCTTGG
-	+
-	@?@DDDDDDHHH?GH:?FCBGGB@C?DBEGIIIIAEF;FCGGI#########################################################
-	--
-	@HWI-ST330:304:H045HADXX:1:1101:1106:89824
-	CACAAATCGGCTCAGGAGGCTTGTAGAAAAGCTCAGCTTGACANNNNNNNNNNNNNNNNNGNGNACGAAACNNNNGNNNNNNNNNNNNNNNNNNNGTTGG
-	+
-	?@@DDDDDB1@?:E?;3A:1?9?E9?<?DGCDGBBDBF@;8DF#########################################################
+***
+**Exercises**
 
-****
-**Exercise**
-
-1) Search for the sequence CTCAATGAAGAAATCTCTTAAAC in `Mov10_oe_1.subset.fq`.
+1. Search for the sequence CTCAATGA in `Mov10_oe_1.subset.fq`.
 In addition to finding the sequence, have your search also return
 the name of the sequence.
 
-2) Search for that sequence in all Mov10 replicate fastq files.
-****
+2. Search for that sequence in all Mov10 replicate fastq files.
+***
 
 ## Redirection
 
@@ -81,25 +79,34 @@ to a file, so that we can look at it later.
 The redirection command for putting something in a file is `>`
 
 Let's try it out and put all the sequences that contain 'NNNNNNNNNN'
-from all the files in to another file called `bad_reads.txt`.
+from all the files into another file called `bad_reads.txt`.
 
 ```bash
-$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_1.subset.fq > bad_reads.txt
+$ grep -B 1 -A 2 NNNNNNNNNN Mov10_oe_1.subset.fq > bad_reads.txt
 ```
 
 The prompt should sit there a little bit, and then it should look like nothing
-happened. But type `ls`. You should have a new file called `bad_reads.txt`. Take
-a look at it and see if it has what you think it should.
+happened. 
 
-If we use '>>', it will append to rather than overwrite a file.  This can be useful for saving more than one search, for example:
-    
 ```bash
-$ grep -B1 -A2 NNNNNNNNNN Mov10_oe_2.subset.fq >> bad_reads.txt
+$ ls -l
 ```
 
-Since our `bad_reads.txt` file isn't a raw_fastq file, we should move it to a different location within our directory. We decide to move it to the `other` folder using the command `mv`. 
+You should have a new file called `bad_reads.txt`. Take a look at it and see if it has what you think it should.
+
+If we use `>>`, it will append to rather than overwrite a file.  This can be useful for saving more than one search, for example.
+    
+```bash
+$ grep -B 1 -A 2 NNNNNNNNNN Mov10_oe_2.subset.fq >> bad_reads.txt
+
+$ ls -l
+```
+
+Since our `bad_reads.txt` file isn't a raw fastq file, we should move it to a different location within our directory. We decide to create a new folder called `other`, and move the `bad_reads.txt` to this `other` folder using the command `mv`. 
 
 ```bash
+$ mkdir ../other/
+
 $ mv bad_reads.txt ../other/
 ```
 
