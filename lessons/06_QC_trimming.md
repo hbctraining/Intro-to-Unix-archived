@@ -127,13 +127,13 @@ $ ls -l
 
 Before we run FastQC, let's start an interactive session on the cluster:
 
-`$ bsub -Is -n 1 -q interactive bash`
+`$ srun --pty -p interactive -t 0-12:00 --mem 8G /bin/bash`
 
 ***An interactive session is a very useful to test tools, workflows, run jobs that open new interactive windows (X11-forwarding) and so on.***
 
 Once your interactive job starts, notice that the command prompt has changed; this is because we are working on a compute node now, not on a login node.
 
-Before we start using software, we have to load the environments for each software package. On clusters, this is typically done using a **module** system. 
+Before we start using software, we have to load the environments for each software package. On clusters, this is typically done using a **LMOD** system. 
 
 If we check which modules we currently have loaded, we should not see FastQC.
 
@@ -151,7 +151,7 @@ $ echo $PATH
 To run the FastQC program (pretending we don't have bcbio in our $PATH), we would first need to load the appropriate Orchestra module, so it puts the program (and any dependencies) into our path:
 
 ```bash
-$ module load seq/fastqc/0.11.3
+$ module load fastqc/0.11.5
 ```
 
 Once a module for a tool is loaded, you have essentially made the program (fastqc) directly available to you like any other basic UNIX command.
@@ -176,9 +176,9 @@ Exit the interactive session and start a new one with 6 cores, and use the multi
 
 `$ exit`      #exit the current interactive session
 	
-`$ bsub -Is -n 6 -q interactive bash`      #start a new one with 6 cpus (-n 6)
+`$ srun --pty -n 6 -p interactive -t 0-12:00 --mem 8G /bin/bash`      #start a new one with 6 cpus (-n 6) and 8G RAM (--mem 8G)
 	
-`$ module load seq/fastqc/0.11.3`     #you'll have to reload the module for the new session
+`$ module load fastqc/0.11.5`     #you'll have to reload the module for the new session
 
 `$ cd ~/unix_workshop/rnaseq_project/data/untrimmed_fastq/` #change to the untrimmed_fastq directory
 	
@@ -223,8 +223,8 @@ Open *FileZilla*, and click on the File tab. Choose 'Site Manager'.
 
 Within the 'Site Manager' window, do the following: 
 
-1. Click on 'New Site', and name it something intuitive (e.g. Orchestra)
-2. Host: orchestra.med.harvard.edu (OR transfer.orchestra.med.harvard.edu)
+1. Click on 'New Site', and name it something intuitive (e.g. O2)
+2. Host: transfer.rc.hms.harvard.edu
 3. Protocol: SFTP - SSH File Transfer Protocol
 4. Logon Type: Normal
 5. User: userID
@@ -319,21 +319,21 @@ Once we have an idea of the quality of our raw data, it is time to trim away ada
 
 Let's load the *Trimmomatic* module:
 
-`$ module load seq/Trimmomatic/0.33`
+`$ module load trimmomatic/0.36`
 
-By loading the *Trimmomatic* module, the **trimmomatic-0.33.jar** file is now accessible to us in the **opt/** directory, allowing us to run the program. 
+By loading the *Trimmomatic* module, the **trimmomatic-0.36.jar** file is now accessible to us in the **$TRIMMOMATIC** variable, pointing to **/n/app/trimmomatic/0.36/bin**, allowing us to run the program. 
 
-Because *Trimmomatic* is java based, it is run using the `java -jar /opt/Trimmomatic-0.33/trimmomatic-0.33.jar` command:
+Because *Trimmomatic* is java based, it is run using the `java -jar $TRIMMOMATIC/trimmomatic-0.36.jar` command:
 
 ```bash
-$ java -jar /opt/Trimmomatic-0.33/trimmomatic-0.33.jar SE \
+$ java -jar $TRIMMOMATIC/trimmomatic-0.36.jar SE \
 -threads 4 \
 inputfile \
 outputfile \
 OPTION:VALUE... # DO NOT RUN THIS
 ```
 
-`java -jar` calls the Java program, which is needed to run *Trimmomatic*, which is a 'jar' file (`trimmomatic-0.33.jar`). A 'jar' file is a special kind of java archive that is often used for programs written in the Java programming language.  If you see a new program that ends in '.jar', you will know it is a java program that is executed `java -jar` <*location of program .jar file*>.
+`java -jar` calls the Java program, which is needed to run *Trimmomatic*, which is a 'jar' file (`trimmomatic-0.36.jar`). A 'jar' file is a special kind of java archive that is often used for programs written in the Java programming language.  If you see a new program that ends in '.jar', you will know it is a java program that is executed `java -jar` <*location of program .jar file*>.
 
 The `SE` argument is a keyword that specifies we are working with single-end reads. We have to specify the `-threads` parameter because *Trimmomatic* uses 16 threads by default.
 
@@ -365,12 +365,12 @@ Since the *Trimmomatic* command is complicated and we will be running it a numbe
 For the single fastq input file `Mov10_oe_1.subset.fq`, we're going to run the following command:
 
 ```bash
-$ java -jar /opt/Trimmomatic-0.33/trimmomatic-0.33.jar SE \
+$ java -jar $TRIMMOMATIC/trimmomatic-0.36.jar SE \
 -threads 4 \
 -phred33 \
 Mov10_oe_1.subset.fq \
 ../trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq \
-ILLUMINACLIP:/opt/Trimmomatic-0.33/adapters/TruSeq3-SE.fa:2:30:10 \
+ILLUMINACLIP:$TRIMMOMATIC/adapters/TruSeq3-SE.fa:2:30:10 \
 TRAILING:25 \
 MINLEN:35
 ```
@@ -381,7 +381,7 @@ This command tells *Trimmomatic* to run on a fastq file containing Single-End re
 After the job finishes, you should see the *Trimmomatic* output in the terminal: 
 
 ```
-TrimmomaticSE: Started with arguments: -threads 4 -phred33 Mov10_oe_1.subset.fq ../trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq ILLUMINACLIP:/opt/Trimmomatic-0.33/adapters/TruSeq3-SE.fa:2:30:10 TRAILING:25 MINLEN:35
+TrimmomaticSE: Started with arguments: -threads 4 -phred33 Mov10_oe_1.subset.fq ../trimmed_fastq/Mov10_oe_1.qualtrim25.minlen35.fq ILLUMINACLIP:$TRIMMOMATIC/adapters/TruSeq3-SE.fa:2:30:10 TRAILING:25 MINLEN:35
 Using Long Clipping Sequence: 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA'
 Using Long Clipping Sequence: 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC'
 ILLUMINACLIP: Using 0 prefix pairs, 2 forward/reverse sequences, 0 forward only sequences, 0 reverse only sequences
@@ -409,12 +409,12 @@ Now, run the `for` loop to run *Trimmomatic* on all files:
 $ for infile in *fq
   do
     outfile=$infile.qualtrim25.minlen35.fq
-	java -jar /opt/Trimmomatic-0.33/trimmomatic-0.33.jar SE \
+	java -jar $TRIMMOMATIC/trimmomatic-0.36.jar SE \
 	-threads 4 \
 	-phred33 \
 	$infile \
 	$outfile \
-	ILLUMINACLIP:/opt/Trimmomatic-0.33/adapters/TruSeq3-SE.fa:2:30:10 \
+	ILLUMINACLIP:$TRIMMOMATIC/adapters/TruSeq3-SE.fa:2:30:10 \
 	TRAILING:25 \
 	MINLEN:35
   done
@@ -438,27 +438,27 @@ A submission script is oftentimes preferable to executing commands on the termin
 
 To run the *Trimmomatic* command on a worker node via the job scheduler, we need to create a submission script with two important components:
 
-1. our **LSF directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
+1. our **SLURM directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
 
 2. the commands to be run in order
 
-Create the script called `trimmomatic_mov10.lsf`:
+Create the script called `trimmomatic_mov10.run`:
 
 ```bash
 $ cd ~/unix_workshop/rnaseq_project/
 
-$ nano trimmomatic_mov10.lsf
+$ nano trimmomatic_mov10.run
 ```
 
-Within `nano` let's first add our commands, then we will come back to add our *LSF directives* (remember to comment liberally). Also, let's use the `basename` function to name our trimmed file more succinctly:
+Within `nano` let's first add our commands, then we will come back to add our *SLURM directives* (remember to comment liberally). Also, let's use the `basename` function to name our trimmed file more succinctly:
 
 ```bash
 # Change directories into the folder with the untrimmed fastq files
 cd ~/unix_workshop/rnaseq_project/data/untrimmed_fastq
 
 # Loading modules for tools
-module load seq/Trimmomatic/0.33
-module load seq/fastqc/0.11.3
+module load trimmomatic/0.36
+module load fastqc/0.11.5
 
 # Run Trimmomatic
 echo "Running Trimmomatic..."
@@ -470,12 +470,12 @@ do
   outfile=$base.qualtrim25.minlen35.fq
  
   # Run Trimmomatic command
-  java -jar /opt/Trimmomatic-0.33/trimmomatic-0.33.jar SE \
+  java -jar $TRIMMOMATIC/trimmomatic-0.36.jar SE \
   -threads 4 \
   -phred33 \
   $infile \
   ../trimmed_fastq/$outfile \
-  ILLUMINACLIP:/opt/Trimmomatic-0.33/adapters/TruSeq3-SE.fa:2:30:10 \
+  ILLUMINACLIP:$TRIMMOMATIC/adapters/TruSeq3-SE.fa:2:30:10 \
   TRAILING:25 \
   MINLEN:35
   
@@ -485,20 +485,20 @@ done
 echo "Running FastQC..."
 fastqc -t 6 ../trimmed_fastq/*.fq
 ```
-Now that we have our commands complete, add the shebang line and LSF directives to the top of the script:
+Now that we have our commands complete, add the shebang line and SLURM directives to the top of the script:
 
 ```
 #!/bin/bash
 
-#BSUB -q priority 	# queue name
-#BSUB -W 2:00 		# hours:minutes runlimit after which job will be killed.
-#BSUB -n 6 		# number of cores requested
-#BSUB -J rnaseq_mov10_qc         # Job name
-#BSUB -o %J.out       # File to which standard out will be written
-#BSUB -e %J.err       # File to which standard err will be written
+#SBATCH -p priority 			# partition name
+#SBATCH -t 0-2:00 			# days-hours:minutes runlimit after which job will be killed.
+#SBATCH -n 6 				# number of cores requested
+#SBATCH --jobname rnaseq_mov10_qc       # Job name
+#SBATCH -o %j.out       		# File to which standard out will be written
+#SBATCH -e %j.err       		# File to which standard err will be written
 ```
 
-`$ bsub < trimmomatic_mov10.lsf`
+`$ sbatch trimmomatic_mov10.run`
 
 It is good practice to load the modules we plan to use at the beginning of the script. Therefore, if we run this script in the future, we don't have to worry about whether we have loaded all of the necessary modules prior to executing the script. 
 
