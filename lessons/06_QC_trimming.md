@@ -493,7 +493,7 @@ Now that we have our commands complete, add the shebang line and SLURM directive
 #SBATCH -p priority 			# partition name
 #SBATCH -t 0-2:00 			# days-hours:minutes runlimit after which job will be killed.
 #SBATCH -n 6 				# number of cores requested
-#SBATCH --jobname rnaseq_mov10_qc       # Job name
+#SBATCH -J rnaseq_mov10_qc       # Job name
 #SBATCH -o %j.out       		# File to which standard out will be written
 #SBATCH -e %j.err       		# File to which standard err will be written
 ```
