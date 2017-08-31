@@ -34,7 +34,7 @@ lessons. So here's a short exercise...
 > Note: You can use your command history to retrieve the commands for each step. Don't forget the "shebang line". Make sure you include the `mkdir` commands you used to create new directories.
 
 ***
-- If this was a script on Orchestra, what would you have to do to run it? 
+- If this was a script on O2, what would you have to do to run it? 
 - In order to run the workflow in this script on another fastq file, you'll need to make changes. _What would have to modify to get this workflow to work with a different file?_
 
 ***
@@ -61,15 +61,16 @@ Next, we'll initialize variables that contain the paths to where the common file
 Let's add 2 variables named "genome" and "gtf", these will contain the locations of the genome indices and the annotation file respectively:
 
     # location of genome reference FASTA and index files + the gene annotation file
-    genome=/groups/hbctraining/unix_workshop_other/reference_STAR/
+    genome=/n/groups/hbctraining/unix_workshop_other/reference_STAR/
     gtf=~/unix_workshop/rnaseq_project/data/reference_data/chr1-hg19_genes.gtf
 
 Next, make sure you load all the modules for the script to run. This is important so your script can run independent of any "prep" steps that need to be run beforehand:
     
     # set up our software environment...
-    module load seq/samtools/1.3
-    module load seq/htseq/0.6.1p1
-    module load seq/STAR/2.5.2b
+    module load gcc/6.2.0
+    module load samtools/1.3.1
+    module load HTSEQ SOON
+    module load star/2.5.2b
 
 We'll keep the output directory creation, however, we will add the `-p` option this will make sure that `mkdir` will create the directory only if it does not exist, and it won't throw an error if it does exist.
 ```
@@ -142,32 +143,32 @@ $ chmod u+rwx rnaseq_analysis_on_input_file.sh
 $ sh rnaseq_analysis_on_input_file.sh <name of fastq>
 ```
 
-#### Running our script iteratively as a job submission to the LSF scheduler
+#### Running our script iteratively as a job submission to the SLURFM scheduler
 
-**The above script will run in an interactive session one file at a time. If we wanted to run this script as a job submission to LSF, and with only one command have LSF run through the analysis for all your input fastq files?**
+**The above script will run in an interactive session one file at a time. If we wanted to run this script as a job submission to SLURM, and with only one command have LSF run through the analysis for all your input fastq files?**
 
 To run the above script iteratively for all of the files on a worker node via the job scheduler, we need to create a **new submission script** that will need 2 important components:
 
-1. our **LSF directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
+1. our **SLURM directives** at the **beginning** of the script. This is so that the scheduler knows what resources we need in order to run our job on the compute node(s).
 2. a for loop that iterates through and runs the above script for all the fastq files.
 
-Let's create a new file with nano and call it `rnaseq_analysis_on_allfiles.lsf`:
+Let's create a new file with nano and call it `rnaseq_analysis_on_allfiles.run`:
 
-	$ nano rnaseq_analysis_on_allfiles.lsf
+	$ nano rnaseq_analysis_on_allfiles.run
 
-> Please note that the extension on this script is `lsf`, but it can be anything you want. The reason it's a good idea to have submission scripts on orchestra have this extension is, once more, for your future self to know right away what is possible in this script, i.e. a set of commands preceded by LSF directives.
+> Please note that the extension on this script is `run`, but it can be anything you want. The reason it's a good idea to have submission scripts on O2 have this extension is, once more, for your future self to know right away what is possible in this script, i.e. a set of commands preceded by SLURM directives.
 
-The top of the file should look like with the LSF directives:
+The top of the file should look like with the SLURM directives:
 
     #!/bin/bash
 
-    #BSUB -q priority		# Partition to submit to (comma separated)
-    #BSUB -n 6                  # Number of cores, since we are running the STAR command with 6 threads
-    #BSUB -W 1:30               # Runtime in D-HH:MM (or use minutes)
-    #BSUB -R "rusage[mem=4000]"    # Memory in MB
-    #BSUB -J rnaseq_mov10         # Job name
-    #BSUB -o %J.out       # File to which standard out will be written
-    #BSUB -e %J.err       # File to which standard err will be written
+    #SBATCH -p priority				# Partition to submit to
+    #SBATCH -n 6				# Number of cores, since we are running the STAR command with 6 threads
+    #SBATCH -t 0-1:30				# Runtime in D-HH:MM (or use minutes)
+    #SBATCH -R --mem 48G			# Memory in GB
+    #SBATCH -J rnaseq_mov10			# Job name
+    #SBATCH -o %j.out				# File to which standard out will be written
+    #SBATCH -e %j.err				# File to which standard err will be written
 
 	# this `for` loop, will take our trimmed fastq files as input and run the script for all of them one after the other. 
 
@@ -187,7 +188,7 @@ Before you run this script, let's add a few more commands after the `for` loop f
 
 Our submission script is now complete; save and exit out of nano and submit away (note the `<` between the command and the script name):
 ```
-$ bsub < rnaseq_analysis_on_allfiles.lsf
+$ sbatch rnaseq_analysis_on_allfiles.run
 ```
 
 Now we have a count matrix for our dataset, the only thing we are missing is a header to indicate which columns correspond to which sample. We can add that in by creating a file with the header information in it:
@@ -205,36 +206,36 @@ Now join the header to the file using `cat` with the `header.txt` file as the fi
 
 **The above script will run through the analysis for all your input fastq files, but it will do so in serial. We can set it up so that the pipeline is working on all the trimmed data in parallel (at the same time). This will save us a lot of time when we have realistic datasets.**
 
-Let's make a modified version of the above script to parallelize our analysis. To do this need to modify one major aspect which will enable us to work with some of the contrainsts that this scheduler (LSF) has. We will be using a for loop for submission and putting the directives for each submission in the bsub command.
+Let's make a modified version of the above script to parallelize our analysis. To do this need to modify one major aspect which will enable us to work with some of the contrainsts that this scheduler (SLURM) has. We will be using a for loop for submission and putting the directives for each submission in the bsub command.
 
-Let's make a new file called `rnaseq_analysis_on_allfiles-for_lsf.sh`. Note this is a normal shell script.
-
-
-	$ nano rnaseq_analysis_on_allfiles_for-lsf.sh
+Let's make a new file called `rnaseq_analysis_on_allfiles-for_slurm.sh`. Note this is a normal shell script.
 
 
-This file will loop through the same files as in the previous script, but the command it submits will be the actual bsub command:
+	$ nano rnaseq_analysis_on_allfiles_for-slurm.sh
+
+
+This file will loop through the same files as in the previous script, but the command it submits will be the actual sbatch command:
 
 ```bash
 #! /bin/bash
 
 for fq in ~/unix_workshop/raw_fastq/*.fq
 do
-bsub -q priority -n 6 -W 1:30 -R "rusage[mem=4000]" -J rnaseq_mov10 -o %J.out -e %J.err "sh rnaseq_analysis_on_input_file.sh $fq"
+sbatch -p priority -n 6 -t 0-1:30 --mem 48G -J rnaseq_mov10 -o %j.out -e %j.err --wrap="sh rnaseq_analysis_on_input_file.sh $fq"
 sleep 1
 done
 ```
-**In the above for loop please note that after the bsub directives the `sh rnaseq_analysis_on_input_file.sh $fq` command is in quotes!**
+**In the above for loop please note that after the sbatch directives the `sh rnaseq_analysis_on_input_file.sh $fq` command is in quotes!**
 
 > NOTE: All job schedulers are similar, but not the same. Once you understand how one works, you can transition to another one without too much trouble. They all have their pros and cons that the system administrators for your setup have taken into consideration and picked one that fits the needs of the users best. 
 
 What you should see on the output of your screen would be the jobIDs that are returned
 from the scheduler for each of the jobs that your script submitted.
 
-You can see their progress by using the `bjobs` command (though there is a lag of
+You can see their progress by using the `scontrol -u ecommons -t <RUNNING|PENDING>` command (though there is a lag of
 about 60 seconds between what is happening and what is reported).
 
-Don't forget about the `bkill` command, should something go wrong and you need to
+Don't forget about the `scancel <jobid>` or `scancel --name rnaseq_mov10` command, should something go wrong and you need to
 cancel your jobs.
 
 ---
