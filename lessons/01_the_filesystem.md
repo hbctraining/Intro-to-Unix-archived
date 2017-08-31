@@ -52,7 +52,7 @@ By default, there is no terminal for the bash shell available in the Windows OS,
 Type in the following command with your username to login:
 
 ```bash
-ssh username@orchestra.med.harvard.edu
+ssh username@login.rc.hms.harvard.edu
 ```
 
 You will receive a prompt for your password, and you should type in your associated password; note that the cursor will *not move* as you type in your password.
@@ -72,20 +72,20 @@ The command prompt will have some characters before it, something like `[rc_trai
 The first command we will type on the command prompt will be to start a so-called "interactive session" on Orchestra.
 
 ```bash
-$ bsub -Is -q interactive bash
+$ srun --pty -p interactive -t 0-12:00 --mem 8G /bin/bash
 ```
 
-Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `[rc_training01@clarinet002-074 ~]`. *We will be explaining what this means in more detail later when we talk about HPC and Orchestra.* 
+Press enter after you type in that command. You will get a couple of messages, but in a few seconds you should get back the command prompt `$`; the string of characters before the command prompt, however, have changed. They should say something like `[rc_training01@compute-a-16-69:~]`. *We will be explaining what this means in more detail later when we talk about HPC and Orchestra.* 
 
 Make sure that your command prompt is now preceded by a character string that contain words like "clarinet", "bassoon", etc.
 
 Copy our example data folder to your home directory using the following command:
 
 ```bash
-$ cp -r /groups/hbctraining/unix_workshop/ .
+$ cp -r /n/groups/hbctraining/unix_workshop/ .
 ```
 
->'cp' is the command for copy. This command required you to specify the location of the item you want to copy (/groups/hbctraining/unix_workshop/) and the location of the destination (.); please note the space between the 2 in the command. The "-r" is an option that modifies the copy command to do something slightly different than usual. The "." means "here", i.e. the destination location is where you currently are.
+>'cp' is the command for copy. This command required you to specify the location of the item you want to copy (/n/groups/hbctraining/unix_workshop/) and the location of the destination (.); please note the space between the 2 in the command. The "-r" is an option that modifies the copy command to do something slightly different than usual. The "." means "here", i.e. the destination location is where you currently are.
 
 ## Starting with the shell
 
