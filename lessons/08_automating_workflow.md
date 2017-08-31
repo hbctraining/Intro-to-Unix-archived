@@ -166,7 +166,7 @@ The top of the file should look like with the SLURM directives:
     #SBATCH -n 6				# Number of cores, since we are running the STAR command with 6 threads
     #SBATCH -t 0-1:30				# Runtime in D-HH:MM (or use minutes)
     #SBATCH -R --mem 48G			# Memory in GB
-    #SBATCH --job-name rnaseq_mov10		# Job name
+    #SBATCH -J rnaseq_mov10			# Job name
     #SBATCH -o %j.out				# File to which standard out will be written
     #SBATCH -e %j.err				# File to which standard err will be written
 
@@ -221,7 +221,7 @@ This file will loop through the same files as in the previous script, but the co
 
 for fq in ~/unix_workshop/raw_fastq/*.fq
 do
-sbatch -p priority -n 6 -t 0-1:30 --mem 48G --job-name rnaseq_mov10 -o %j.out -e %j.err --wrap="sh rnaseq_analysis_on_input_file.sh $fq"
+sbatch -p priority -n 6 -t 0-1:30 --mem 48G -J rnaseq_mov10 -o %j.out -e %j.err --wrap="sh rnaseq_analysis_on_input_file.sh $fq"
 sleep 1
 done
 ```
