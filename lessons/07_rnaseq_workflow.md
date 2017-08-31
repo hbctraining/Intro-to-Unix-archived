@@ -16,13 +16,13 @@ Approximate time: 90 minutes
 
 ### Setting up
 
-To get started with this lesson, we will login to the cluster but this time we are going to ask for 6 cores. We will do this by adding `-n 6` to our bsub command:
+To get started with this lesson, we will login to the cluster but this time we are going to ask for 6 cores. We will do this by adding `-n 6` to our srun command:
 
 ```
-ssh username@orchestra.med.harvard.edu
+ssh username@login.rc.hms.harvard.edu
 (enter password)
 
-$ bsub -Is -n 6 -q interactive bash	
+$ srun --pty -n 6 -p interactive -t 0-12:00 --mem 8G /bin/bash	
 ```
 
 Change directories into the `unix_workshop` directory and copy the `reference_data` folder into your project directory:
@@ -62,7 +62,7 @@ We previously described a general overview of the steps involved in RNA-Seq anal
 So let's get started by loading up some of the modules for tools we need for this section: 
 
 ```bash
- $ module load seq/STAR/2.5.2b seq/samtools/1.3 seq/htseq/0.6.1p1
+ $ module load gcc/6.2.0 star/2.5.2b samtools/1.3.1 #NO HTSEQ YET, INSATALLING
 ```
 
 Create an output directory for our alignment files:
@@ -77,7 +77,7 @@ In the script, we will eventually loop over all of our files and have the cluste
 **NOTE: if you did not follow the last section, please execute the following command:** (this will copy over the required files into your home directory.)
 
 ```bash
-$ cp -r /groups/hbctraining/unix_workshop_other/trimmed_fastq data/
+$ cp -r /n/groups/hbctraining/unix_workshop_other/trimmed_fastq data/
 
 ```
 
@@ -131,15 +131,15 @@ Aligning reads using STAR is a two step process:
 1. Create a genome index 
 2. Map reads to the genome
 
-> A quick note on shared databases for human and other commonly used model organisms. The Orchestra cluster has a designated directory at `/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databases, such as NCBI and PDB. So when using a tool and requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
+> A quick note on shared databases for human and other commonly used model organisms. The O2 cluster has a designated directory at `/n/groups/shared_databases/` in which there are files that can be accessed by any user. These files contain, but are not limited to, genome indices for various tools, reference sequences, tool specific data, and data from public databases, such as NCBI and PDB. So when using a tool and requires a reference of sorts, it is worth taking a quick look here because chances are it's already been taken care of for you. 
 
 ```bash
-$ ls -l /groups/shared_databases/igenome/
+$ ls -l /n/groups/shared_databases/igenome/
 ```
 
 ### Creating a genome index
 
-For this workshop we are using reads that originate from a small subsection of chromosome 1 (~300,000 reads) and so we are using only chr1 as the reference genome. Therefore, we cannot use any of the ready-made indices available in the `/groups/shared_databases/` folder.
+For this workshop we are using reads that originate from a small subsection of chromosome 1 (~300,000 reads) and so we are using only chr1 as the reference genome. Therefore, we cannot use any of the ready-made indices available in the `/n/groups/shared_databases/` folder.
 
 For this workshop, we have already indexed the reference genome for you as this can take a while. We have provided the code below that you would use to index the genome for your future reference, but please **do not run the code below**. For indexing the reference genome, a reference genome (FASTA) is required and an annotation file (GTF or GFF3) is suggested a more accurate alignment of the reads. 
 
@@ -238,7 +238,7 @@ Use _**FileZilla**_ to copy the following files to your local machine:
 > First, identify the location of the _origin file_ you intend to copy, followed by the _destination_ of that file. Since the original file is located on Orchestra, this requires you to provide remote host and login information.
 
 ```bash
-$ scp user_name@transfer.orchestra.med.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
+$ scp user_name@transfer.rc.hms.harvard.edu:/home/user_name/unix_workshop/rnaseq_project/results/Mov10_oe_1_Aligned.sortedByCoord.out.bam* /path/to/directory_on_laptop
 ```
 
 **Visualize**
