@@ -13,9 +13,27 @@ This repository has teaching materials for a 2-day introduction to shell (bash) 
 
 > These materials are developed for a trainer-led workshop, but also amenable to self-guided learning.
 
-### Contents:
+### Learning Objectives
 
-### Dataset:
+1.	Understand the necessity for, and use of, the command line interface (bash) and HPC for analyzing high-throughput sequencing data.
+2.	Understand best practices for designing an RNA-seq experiment and analysis the resulting data.
+
+
+### Contents
+| Lessons            | Estimated Duration |
+|:------------------------|:----------|
+|[Introduction to the shell](lessons/01_the_filesystem.md) | 70 min |
+|[Searching and redirection in shell](lessons/02_searching_files.md) | 45 min |
+|[Shell scripts and `for` loops](lessons/03_loops_and_scripts.md) | 75 min |
+|[Permissions and environment variables](lessons/04_permissions_and_environment_variables.md) | 50 min |
+|[Project and data organization](lessons/05_data_organization.md) | 40 min |
+|[RNA-seq experimental design best practices](lectures/) | 50 min |
+|[Introduction to High-Performance Computing for HMS-RC's Orchestra](lectures/) | 45 min |
+|[RNA-seq data QC with FastQC)](lessons/06_QC_trimming.md) | 75 min |
+|[RNA-seq workflow: Alignment and Counting](lessons/07_rnaseq_workflow.md) | 90 min |
+|[Automating the RNA-seq workflow](lessons/08_automating_workflow.md) | 60 min |
+
+### Dataset
 
 ***
 
