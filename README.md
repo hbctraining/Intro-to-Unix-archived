@@ -5,6 +5,8 @@ Prerequisites: None
 Duration: 2-day workshop (~13 hours of trainer-led time)
 ---
 
+**THIS REPO IS ARCHIVED, PLEASE GO TO [https://hbctraining.github.io/main](https://hbctraining.github.io/main) FOR CURRENT LESSONS.**
+
 ## Introduction to shell and high-performance computing (HPC)
 
 ### Description
